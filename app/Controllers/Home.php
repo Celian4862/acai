@@ -2,20 +2,26 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\Exceptions\PageNotFoundException;
+
 class Home extends BaseController
 {
     public function index(): string
     {
-        return view('templates/header', ['title' => 'A&ccedil;a&iacute;: Adaptive Community - Assisted Infrastructure'])
+        return view('templates/header', ['title' => 'Adaptive Community-Assisted Infrastructure'])
             . view('components/nav')
-            . view('pages/index')
+            . view('pages/home')
             . view('templates/footer');
     }
 
-    public function login() {
-        return view('templates/header', ['title' => 'Login - A&ccedil;a&iacute;'])
-            . view('components/nav')
-            . view('pages/login')
+    public function view(string $page = 'home') {
+        if (! is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new PageNotFoundException($page);
+        }
+
+        return view('templates/header', ['title' => ucfirst($page) . ' - Açaí'])
+            . view('pages/' . $page)
             . view('templates/footer');
     }
 }
