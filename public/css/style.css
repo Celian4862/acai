@@ -119,6 +119,11 @@ p {
     padding: 0 5%;
 }
 
+#errors ul { /* For form errors */
+    list-style-type: none;
+    padding: 0;
+}
+
 #support-list {
     list-style-type: none;
 }
