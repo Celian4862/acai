@@ -8,12 +8,11 @@ use CodeIgniter\Router\RouteCollection;
 
 use App\Controllers\Accounts;
 
-$routes->get('login', [Accounts::class, 'index']);
-$routes->post('login', [Accounts::class, 'login']);
-$routes->get('forgot-password', [Accounts::class, 'fpass']);
-$routes->post('forgot-password', [Accounts::class, 'send_email']);
-$routes->get('signup', [Accounts::class, 'signup']);
-$routes->post('signup', [Accounts::class, 'create_account']);
+$routes->get('accounts', [Accounts::class, 'view']);
+$routes->get('accounts/(:segment)', [Accounts::class, 'view']);
+$routes->post('accounts/create-account', [Accounts::class, 'create_account']);
+$routes->post('accounts/login', [Accounts::class, 'login']);
+$routes->post('accounts/logout', [Accounts::class, 'logout']);
 
 use App\Controllers\Home;
 
