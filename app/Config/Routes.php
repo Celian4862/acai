@@ -6,14 +6,17 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-use App\Controllers\Accounts;
-
-$routes->get('accounts', [Accounts::class, 'view']);
-$routes->get('accounts/dashboard', [Accounts::class, 'dashboard']);
-$routes->get('accounts/logout', [Accounts::class, 'logout']);
-$routes->get('accounts/(:segment)', [Accounts::class, 'view']);
-$routes->post('accounts/signup', [Accounts::class, 'create_account']);
-$routes->post('accounts/login', [Accounts::class, 'login']);
+$routes->group('accounts', static function ($routes) {
+    $routes->get('/', 'Accounts::view');
+    $routes->get('login', 'Accounts::view');
+    $routes->get('signup', 'Accounts::view/signup');
+    $routes->get('forgot-password', 'Accounts::view/forgot-password');
+    $routes->get('logout', 'Accounts::logout');
+    $routes->get('(:segment)', 'Accounts::user_views/$1');
+    $routes->post('login', 'Accounts::login');
+    $routes->post('signup', 'Accounts::create_account');
+    $routes->post('forgot-password', 'Accounts::forgot_password');
+});
 
 use App\Controllers\Home;
 
