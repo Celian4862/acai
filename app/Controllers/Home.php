@@ -15,7 +15,6 @@ class Home extends BaseController
     }
 
     public function view(string $page) {
-        $page = str_replace('-', '_', $page);
         if (! is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
             throw new PageNotFoundException($page);
         }
