@@ -14,13 +14,14 @@ class Home extends BaseController
             . view('templates/footer');
     }
 
-    public function view(string $page = 'home') {
+    public function view(string $page) {
+        $page = str_replace('-', '_', $page);
         if (! is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
-            // Whoops, we don't have a page for that!
             throw new PageNotFoundException($page);
         }
 
-        return view('templates/header', ['title' => ucfirst($page) . ' - Açaí'])
+        return view('templates/header', ['title' => ucwords(str_replace('-', ' ', $page))])
+            . view('components/nav')
             . view('pages/' . $page)
             . view('templates/footer');
     }

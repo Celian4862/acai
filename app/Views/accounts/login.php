@@ -7,7 +7,7 @@
         <div class="col justify-content-center">
             <div class = "m-5">
                 <h2>Log In</h2>
-                <form action="" method="POST">
+                <form action="/login" method="POST">
                     <?= csrf_field() ?>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address / Username</label>

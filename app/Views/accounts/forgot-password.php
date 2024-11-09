@@ -5,7 +5,7 @@
     <h2 class="text-center">Forgot Password</h2>
     <div class ="row justify-content-center">
         <div class="col-md-4">
-            <form action="./assets/processing_php/send_email.php" method="post">
+            <form action="/forgot-password" method="post">
                 <?= csrf_field() ?>
 
                 <div class="mb-3">

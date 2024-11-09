@@ -12,7 +12,7 @@ function check_valid(string $session_var) {
     <h2 class="text-center">Sign Up</h2>
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <form action="./assets/processing_php/add_account.php" method="POST">
+            <form action="/signup" method="POST">
                 <?= csrf_field() ?>
 
                 <div class="mb-3">
@@ -62,7 +62,7 @@ function check_valid(string $session_var) {
 
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary">Create account</button>
-                    <a href="./login.php" class="btn btn-outline-secondary">Log in</a>
+                    <a href="/login" class="btn btn-outline-secondary">Log in</a>
                 </div>
             </form>
         </div>
