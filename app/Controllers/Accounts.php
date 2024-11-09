@@ -8,26 +8,35 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 class Accounts extends BaseController
 {
     public function view($page = 'login') {
-        helper('form');
         if (!is_file(APPPATH.'/Views/accounts/'.$page.'.php')) {
             throw new PageNotFoundException($page);
         }
 
-        return view('templates/header', ['title' => ucfirst($page)])
+        if (session()->has('logged_in') && session()->get('logged_in') === true) {
+            return redirect()->to('accounts/dashboard');
+        }
+
+        helper('form');
+
+        return view('templates/header', ['title' => ucwords(str_replace('-', ' ', $page))])
             . view('components/nav')
             . view('accounts/' . $page)
             . view('templates/footer');
     }
 
-    public function dashboard() {
-        if (! session()->has('logged_in') || session()->get('logged_in') !== true) {
-            return redirect()->to('/accounts/login');
+    public function user_views($page = 'dashboard') {
+        if (!is_file(APPPATH.'/Views/accounts/'.$page.'.php')) {
+            throw new PageNotFoundException($page);
         }
-        
-        return view('templates/header', ['title' => 'Dashboard'])
-            . view('components/nav')
-            . view('accounts/dashboard', session()->get())
-            . view('templates/footer');
+
+        if (session()->has('logged_in') && session()->get('logged_in') === true) {
+            return view('templates/header', ['title' => ucwords(str_replace('-', ' ', $page))])
+                . view('components/nav')
+                . view('accounts/' . $page, session()->get())
+                . view('templates/footer');
+        }
+
+        return redirect('Accounts::view');
     }
 
     public function login() {
@@ -61,7 +70,10 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return redirect()->to('accounts/dashboard');
+        return view('templates/header', ['title' => 'Logged in'])
+            . view('components/nav')
+            . view('accounts/success', ['message' => 'You have been logged in.'])
+            . view('templates/footer');
     }
 
     public function create_account()
@@ -100,11 +112,46 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return redirect()->to('accounts/dashboard');
+        return view('templates/header', ['title' => 'Success'])
+            . view('components/nav')
+            . view('accounts/success', ['message' => 'Account created.'])
+            . view('templates/footer');
+    }
+
+    public function forgot_password() {
+        helper('form');
+
+        $data = $this->request->getPost('email');
+
+        if (! $this->validateData($data, [
+            'email' => 'required|valid_email'
+        ])) {
+            return $this->view('forgot-password');
+        }
+
+        $post = $this->validator->getValidated();
+
+        $model = model(AccountsModel::class);
+
+        $account = $model->getAccount($post['email']);
+
+        if (! $account) {
+            return redirect()->back()->withInput()->with('error', 'Email not found.');
+        }
+
+        // Send email with password reset link
+        return redirect()->to('accounts/login')->with('success', 'Password reset link sent to email.');
     }
 
     public function logout() {
-        session()->destroy();
+        if (session()->get('logged_in') && session()->get('logged_in') === true) {
+            session()->set('logged_in', false);
+            session()->destroy();
+            return view('templates/header', ['title' => 'Logged out'])
+                . view('components/nav')
+                . view('accounts/success', ['message' => 'You have been logged out.'])
+                . view('templates/footer');
+        }
         return redirect()->to('/');
     }
 }
