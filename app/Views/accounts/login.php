@@ -1,12 +1,15 @@
-<?= session()->getFlashdata('error') ?>
-<?= validation_list_errors() ?>
-
 <div class="container mt-5">
     <div class="row">
-        <div class="col login-bg"> imago dei </div>
+        <div class="col login-bg"></div>
         <div class="col justify-content-center">
             <div class = "m-5">
                 <h2>Log In</h2>
+
+                <div class="text-danger">
+                    <?= session()->getFlashdata('error') ?>
+                    <?= validation_list_errors() ?>
+                </div>
+                
                 <form action="/accounts/login" method="POST">
                     <?= csrf_field() ?>
                     <div class="mb-3">

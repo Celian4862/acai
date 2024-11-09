@@ -1,6 +1,3 @@
-<?= session()->getFlashdata('error') ?>
-<?= validation_list_errors() ?>
-
 <?php
 // Helper function to display error messages
 function check_valid(string $session_var) {
@@ -10,6 +7,12 @@ function check_valid(string $session_var) {
 
 <div class="container mt-5">
     <h2 class="text-center">Sign Up</h2>
+
+    <div id="errors" class="text-danger text-center">
+        <?= session()->getFlashdata('error') ?>
+        <?= validation_list_errors() ?>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-4">
             <form action="/accounts/signup" method="POST">
