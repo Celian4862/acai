@@ -17,22 +17,22 @@ function check_valid(string $session_var) {
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required value="<?= $_SESSION['email'] ?? ''; ?>">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required value="<?= set_value('email') ?>">
                     <!-- DISPLAY ERROR MESSAGE -->
-                    <?php if (check_valid("email_exists")) { ?>
+                    <?php if (check_valid("email-exists")) { ?>
                         <div class="text-danger">Email already exists.</div>
-                    <?php } else if (check_valid("invalid_email")) { ?>
+                    <?php } else if (check_valid("invalid-email")) { ?>
                         <div class="text-danger">Invalid email format.</div>
                     <?php } ?>
                 </div>
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required value="<?= $_SESSION['username'] ?? ''; ?>">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required value="<?= set_value('username') ?>">
                     <!-- DISPLAY ERROR MESSAGE -->
-                    <?php if (check_valid("name_exists")) { ?>
+                    <?php if (check_valid("name-exists")) { ?>
                         <div class="text-danger">Username already exists.</div>
-                    <?php } else if (check_valid("invalid_name")) { ?>
+                    <?php } else if (check_valid("invalid-name")) { ?>
                         <div class="text-danger">Username can only contain letters, numbers, and underscores.</div>
                     <?php } ?>
                 </div>
@@ -41,7 +41,7 @@ function check_valid(string $session_var) {
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
                     <!-- DISPLAY ERROR MESSAGE -->
-                    <?php if (check_valid("invalid_password")) { ?>
+                    <?php if (check_valid("invalid-password")) { ?>
                         <div class="text-danger">Password must either be at least 16 characters long or should contain at least one lowercase letter, one uppercase letter, one special character, and one number, and can be 8 - 15 characters long.</div>
                     <?php } ?>
                 </div>
@@ -50,19 +50,19 @@ function check_valid(string $session_var) {
                     <label for="confirm-password" class="form-label">Confirm Password</label>
                     <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
                     <!-- DISPLAY ERROR MESSAGE -->
-                    <?php if (check_valid("password_nomatch")) { ?>
+                    <?php if (check_valid("password-nomatch")) { ?>
                         <div class="text-danger">Passwords do not match.</div>
                     <?php } ?>
                 </div>
 
                 <div class="mb-3">
                     <label for="birthdate" class="form-label">Date of Birth</label>
-                    <input type="date" class="form-control" id="birthdate" name="birthdate" required value="<?= $_SESSION['birthdate'] ?? ''; ?>">
+                    <input type="date" class="form-control" id="birthdate" name="birthdate" required value="<?= set_value('birthdate') ?>">
                 </div>
 
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary">Create account</button>
-                    <a href="/login" class="btn btn-outline-secondary">Log in</a>
+                    <a href="/accounts/login" class="btn btn-outline-secondary">Log in</a>
                 </div>
             </form>
         </div>
