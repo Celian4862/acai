@@ -13,8 +13,8 @@
             <button type="submit">Search</button>
         </form>
         <ul class="p-0 m-0">
-            <li class="d-inline-block mx-4"><a href="/signup">Sign up</a></li>
-            <li class="d-inline-block mx-4"><a href="/login">Log in</a></li>
+            <li class="d-inline-block mx-4"><a href="/accounts/sign-up">Sign up</a></li>
+            <li class="d-inline-block mx-4"><a href="/accounts/login">Log in</a></li>
         </ul>
     </div>
 </nav>
