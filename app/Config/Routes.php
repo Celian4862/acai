@@ -9,10 +9,11 @@ use CodeIgniter\Router\RouteCollection;
 use App\Controllers\Accounts;
 
 $routes->get('accounts', [Accounts::class, 'view']);
+$routes->get('accounts/dashboard', [Accounts::class, 'dashboard']);
+$routes->get('accounts/logout', [Accounts::class, 'logout']);
 $routes->get('accounts/(:segment)', [Accounts::class, 'view']);
-$routes->post('accounts/create-account', [Accounts::class, 'create_account']);
+$routes->post('accounts/signup', [Accounts::class, 'create_account']);
 $routes->post('accounts/login', [Accounts::class, 'login']);
-$routes->post('accounts/logout', [Accounts::class, 'logout']);
 
 use App\Controllers\Home;
 
