@@ -12,7 +12,7 @@ function check_valid(string $session_var) {
     <h2 class="text-center">Sign Up</h2>
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <form action="/signup" method="POST">
+            <form action="/accounts/signup" method="POST">
                 <?= csrf_field() ?>
 
                 <div class="mb-3">
@@ -39,7 +39,7 @@ function check_valid(string $session_var) {
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required value="<?= set_value('password') ?>">
                     <!-- DISPLAY ERROR MESSAGE -->
                     <?php if (check_valid("invalid-password")) { ?>
                         <div class="text-danger">Password must either be at least 16 characters long or should contain at least one lowercase letter, one uppercase letter, one special character, and one number, and can be 8 - 15 characters long.</div>
@@ -48,7 +48,7 @@ function check_valid(string $session_var) {
 
                 <div class="mb-3">
                     <label for="confirm-password" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required value="<?= set_value('confirm-password') ?>">
                     <!-- DISPLAY ERROR MESSAGE -->
                     <?php if (check_valid("password-nomatch")) { ?>
                         <div class="text-danger">Passwords do not match.</div>
