@@ -121,7 +121,7 @@ class Accounts extends BaseController
     public function forgot_password() {
         helper('form');
 
-        $data = $this->request->getPost('email');
+        $data = $this->request->getPost(['email']);
 
         if (! $this->validateData($data, [
             'email' => 'required|valid_email'
@@ -140,7 +140,10 @@ class Accounts extends BaseController
         }
 
         // Send email with password reset link
-        return redirect()->to('accounts/login')->with('success', 'Password reset link sent to email.');
+        return view('templates/header', ['title' => 'Logged out'])
+        . view('components/nav')
+        . view('accounts/success', ['message' => 'Password reset link sent to email.'])
+        . view('templates/footer');
     }
 
     public function logout() {
