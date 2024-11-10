@@ -1,6 +1,6 @@
 <nav class="sticky-top bg-white p-3 text-center">
-    <a href="/" style="margin: 0 5% 0 0;">
-        <img src="/images/logo.png" alt="logo" width="3%" class="img-fluid" />
+    <a href="/" style="margin: 0 2% 0 0;">
+        <img src="/images/logo.png" alt="logo" width="55px" class="img-fluid" />
     </a>
     <div class="d-inline-flex">
         <ul class="p-0 m-0">
