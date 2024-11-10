@@ -1,3 +1,3 @@
 <div class="text-center">
-    <h2><?= $message ?></h2>
+    <h2><?= esc($message) ?></h2>
 </div>
