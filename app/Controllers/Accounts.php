@@ -84,7 +84,7 @@ class Accounts extends BaseController
 
         if (! $this->validateData($data, [
             'email' => 'required|valid_email|is_unique[accounts.email]',
-            'username' => 'required|alpha_numeric_punct|max_length[30]',
+            'username' => 'required|alpha_numeric|max_length[30]',
             'password' => 'required|min_length[8]|max_length[255]',
             'confirm-password' => 'required|matches[password]',
             'birthdate' => 'required|valid_date'
@@ -144,6 +144,70 @@ class Accounts extends BaseController
         . view('components/nav')
         . view('accounts/success', ['message' => 'Password reset link sent to email.'])
         . view('templates/footer');
+    }
+
+    public function settings() {
+        helper('form');
+
+        $data = $this->request->getPost(['email', 'username', 'old-password', 'new-password', 'confirm-password', 'birthdate']);
+
+        if (! $this->validateData($data, [
+            'email' => 'required|valid_email',
+            'username' => 'required|alpha_numeric|max_length[30]',
+            'old-password' => 'max_length[255]',
+            'new-password' => 'max_length[255]',
+            'confirm-password' => 'matches[new-password]',
+            'birthdate' => 'required|valid_date'
+        ])) {
+            return $this->user_views('settings');
+        }
+
+        $post = $this->validator->getValidated();
+
+        $errors = [];
+
+        $account = model(AccountsModel::class)->getAccount(session()->get('email'));
+
+        if (! $post['old-password'] && ($post['new-password'] || $post['confirm-password'])) {
+            $errors['old-password'] = 'Old password required.';
+        } else if ($post['old-password'] && ! ($post['new-password'] || $post['confirm-password'])) {
+            $errors['new-password'] = 'New password required.';
+            $errors['confirm-password'] = 'Confirm password required.';
+        }
+        
+        if ($post['email'] !== session()->get('email')) {
+            if (model(AccountsModel::class)->getAccount($post['email'])) {
+                $errors['email'] = 'Email already in use.';
+            }
+        }
+
+        if ($post['username'] !== session()->get('username')) {
+            if (model(AccountsModel::class)->getAccount($post['username'])) {
+                $errors['username'] = 'Username already in use.';
+            }
+        }
+        
+        if (! password_verify($post['old-password'], $account['password'])) {
+            $errors['old-password'] = 'Incorrect password.';
+        }
+
+        if ($post['new-password'] === $post['old-password']) {
+            $errors['new-password'] = 'New password must be different from old password.';
+        } else if ($post['new-password'] && strlen($post['new-password']) < 8) {
+            $errors['new-password'] = 'New password must be at least 8 characters long.';
+        } if ($post['new-password'] !== $post['confirm-password']) {
+            $errors['confirm-password'] = 'Passwords do not match.';
+        }
+
+        if (count($errors) > 0) {
+            session()->setFlashdata('custom_errors', $errors);
+            return $this->user_views('settings');
+        }
+
+        return view('templates/header', ['title' => 'Settings updated'])
+            . view('components/nav')
+            . view('accounts/success', ['message' => 'Settings updated.'])
+            . view('templates/footer');
     }
 
     public function logout() {
