@@ -2,7 +2,7 @@
     <h2 class="text-center">User Settings</h2>
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <form action="./assets/processing_php/update_user.php" method="POST">
+            <form action="/accounts/settings" method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
                     <input type="email" class="form-control" id="email" name="email" value="<?= session()->get('email') ?>" />
