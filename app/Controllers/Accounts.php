@@ -58,7 +58,7 @@ class Accounts extends BaseController
         $account = $model->getAccount($post['name-email']);
 
         if (! $account || ! password_verify($post['password'], $account['password'])) {
-            return redirect()->back()->withInput()->with('error', 'Invalid username or password.');
+            return redirect()->back()->withInput();
         }
 
         $account_data = [
@@ -70,7 +70,7 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return redirect()->to('accounts/login');
+        return redirect()->to('accounts/dashboard');
     }
 
     public function create_account()
@@ -109,10 +109,7 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return view('templates/header', ['title' => 'Success'])
-            . view('components/nav')
-            . view('accounts/success', ['message' => 'Account created.'])
-            . view('templates/footer');
+        return redirect()->to('accounts/dashboard');
     }
 
     public function forgot_password() {
@@ -153,8 +150,6 @@ class Accounts extends BaseController
         if (! $validation->run($data, 'user_settings')) {
             return redirect()->back()->withInput();
         }
-        
-        
 
         // FUNCTION DOES NOT WORK PROPERLY PAST THIS POINT
 
