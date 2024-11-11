@@ -44,22 +44,17 @@ class Accounts extends BaseController
 
         $data = $this->request->getPost(['name-email', 'password']);
 
-        if (! $this->validateData($data, [
-            'name-email' => 'required|alpha_numeric_punct|max_length[30]',
-            'password' => 'required|min_length[8]|max_length[255]'
-        ])) {
-            return $this->view('login');
+        $validator = service('validation');
+
+        if (! $validator->run($data, 'login')) {
+            return redirect()->to('accounts/login')->withInput();
         }
 
-        $post = $this->validator->getValidated();
+        $post = $validator->getValidated();
 
         $model = model(AccountsModel::class);
 
         $account = $model->getAccount($post['name-email']);
-
-        if (! $account || ! password_verify($post['password'], $account['password'])) {
-            return redirect()->back()->withInput();
-        }
 
         $account_data = [
             'email' => $account['email'],
@@ -75,21 +70,17 @@ class Accounts extends BaseController
 
     public function create_account()
     {
-        helper('from');
+        helper('form');
 
         $data = $this->request->getPost(['email', 'username', 'password', 'confirm-pass', 'birthdate']);
 
-        if (! $this->validateData($data, [
-            'email' => 'required|valid_email|is_unique[accounts.email]',
-            'username' => 'required|alpha_numeric|max_length[30]',
-            'password' => 'required|min_length[8]|max_length[255]',
-            'confirm-pass' => 'required|matches[password]',
-            'birthdate' => 'required|valid_date'
-        ])) {
+        $validator = service('validation');
+
+        if (! $validator->run($data, 'signup')) {
             return redirect()->back()->withInput();
         }
 
-        $post = $this->validator->getValidated();
+        $post = $validator->getValidated();
 
         $model = model(AccountsModel::class);
 
@@ -151,53 +142,30 @@ class Accounts extends BaseController
             return redirect()->back()->withInput();
         }
 
-        // FUNCTION DOES NOT WORK PROPERLY PAST THIS POINT
+        $post = $validation->getValidated();
 
-        $post = $this->validator->getValidated();
+        $model = model(AccountsModel::class);
 
-        $errors = [];
+        // Update account details
+        $model->save([
+            'id' => $model->getAccount(session()->get('username'))['id'],
+            'email' => $post['email'],
+            'username' => $post['username'],
+            'password' => password_hash($post['new-pass'], PASSWORD_DEFAULT),
+            'birthdate' => $post['birthdate']
+        ]);
 
-        $account = model(AccountsModel::class)->getAccount(session()->get('email'));
+        // Prepare new session data
+        $account_data = [
+            'email' => $post['email'],
+            'username' => $post['username'],
+            'birthdate' => $post['birthdate']
+        ];
 
-        if (! $post['old-pass'] && ($post['new-pass'] || $post['confirm-pass'])) {
-            $errors['old-pass'] = 'Old password required.';
-        } else if ($post['old-pass'] && ! ($post['new-pass'] || $post['confirm-pass'])) {
-            $errors['new-pass'] = 'New password required.';
-            $errors['confirm-pass'] = 'Confirm password required.';
-        }
-        
-        if ($post['email'] !== session()->get('email')) {
-            if (model(AccountsModel::class)->getAccount($post['email'])) {
-                $errors['email'] = 'Email already in use.';
-            }
-        }
+        // Update session data
+        session()->set($account_data);
 
-        if ($post['username'] !== session()->get('username')) {
-            if (model(AccountsModel::class)->getAccount($post['username'])) {
-                $errors['username'] = 'Username already in use.';
-            }
-        }
-        
-        if (! password_verify($post['old-pass'], $account['password'])) {
-            $errors['old-pass'] = 'Incorrect password.';
-        }
-
-        if ($post['new-pass'] === $post['old-pass']) {
-            $errors['new-pass'] = 'New password must be different from old password.';
-        } else if ($post['new-pass'] && strlen($post['new-pass']) < 8) {
-            $errors['new-pass'] = 'New password must be at least 8 characters long.';
-        } if ($post['new-pass'] !== $post['confirm-pass']) {
-            $errors['confirm-pass'] = 'Passwords do not match.';
-        }
-
-        if (count($errors) > 0) {
-            session()->setFlashdata('custom_errors', $errors);
-            return $this->user_views('settings');
-        }
-
-
-
-        return redirect()->to('accounts/settings')->withInput();
+        return redirect()->to('accounts/settings');
     }
 
     public function logout() {
