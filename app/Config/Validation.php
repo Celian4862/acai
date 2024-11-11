@@ -41,4 +41,54 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+
+    public array $user_settings = [
+        'email' => [
+            'label' => 'Email',
+            'rules' => 'required|valid_email',
+            'errors' => [
+                'valid_email' => 'Email is not valid.',
+            ]
+        ],
+        'username' => [
+            'label' => 'Username',
+            'rules' => 'required|alpha_numeric|max_length[30]',
+            'errors' => [
+                'required' => '{field} is required.',
+                'alpha_numeric' => '{field} must contain only letters and numbers.',
+                'max_length' => '{field} may contain up to {param} characters.',
+            ],
+        ],
+        'old-pass' => [
+            'label' => 'Old password',
+            'rules' => 'field_exists|permit_empty|min_length[8]|max_length[255]',
+            'errors' => [
+                'min_length' => '{field} must be at least {param} characters.',
+                'max_length' => '{field} may contain up to {param} characters.',
+            ],
+        ],
+        'new-pass' => [
+            'label' => 'New password',
+            'rules' => 'permit_empty|min_length[8]|max_length[255]',
+            'errors' => [
+                'min_length' => '{field} must be at least {param} characters.',
+                'max_length' => '{field} may contain up to {param} characters.',
+            ],
+        ],
+        'confirm-pass' => [
+            'label' => 'Password confirmation',
+            'rules' => 'matches[new-pass]',
+            'errors' => [
+                ''
+            ],
+        ],
+        'birthdate' => [
+            'label' => 'Date of birth',
+            'rules' => 'required|valid_date',
+            'errors' => [
+                'required' => '{field} is required.',
+                'valid_date' => '{field} must be valid.',
+            ],
+        ]
+    ];
 }
