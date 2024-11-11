@@ -50,8 +50,8 @@ function check_valid(string $session_var) {
                 </div>
 
                 <div class="mb-3">
-                    <label for="confirm-password" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required value="<?= set_value('confirm-password') ?>">
+                    <label for="confirm-pass" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm-pass" name="confirm-pass" placeholder="Confirm your password" required value="<?= set_value('confirm-pass') ?>">
                     <!-- DISPLAY ERROR MESSAGE -->
                     <?php if (check_valid("password-nomatch")) { ?>
                         <div class="text-danger">Passwords do not match.</div>
