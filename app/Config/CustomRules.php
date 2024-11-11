@@ -9,7 +9,7 @@ class CustomRules
     /**
      * Checks if the inputted username or email exists in the database
      * @param mixed $value
-     * @param mixed $params
+     * @param mixed $params The field name to check. This is useful for when the rule is not in the field that needs to be checked
      * @param mixed $data
      * @return bool
      */
