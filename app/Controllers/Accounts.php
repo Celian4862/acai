@@ -89,8 +89,6 @@ class Accounts extends BaseController
             return redirect()->back()->withInput();
         }
 
-        // FUNCTION DOES NOT WORK PROPERLY PAST THIS POINT
-
         $post = $this->validator->getValidated();
 
         $model = model(AccountsModel::class);
@@ -155,6 +153,10 @@ class Accounts extends BaseController
         if (! $validation->run($data, 'user_settings')) {
             return redirect()->back()->withInput();
         }
+        
+        
+
+        // FUNCTION DOES NOT WORK PROPERLY PAST THIS POINT
 
         $post = $this->validator->getValidated();
 
