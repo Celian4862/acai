@@ -13,37 +13,37 @@
                 <?= csrf_field() ?>
 
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" name="email" required value="<?= ($_SERVER['REQUEST_METHOD'] === 'GET') ? session()->get('email') : set_value('email'); ?>" />
+                    <?= form_label('Email', 'email', ['class' => 'form-label']) ?>
+                    <?= form_input('email', set_value('email', session()->get('email'), false), ['id' => 'email', 'class' => 'form-control'], 'email') ?>
                 </div>
 
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="username" class="form-control" id="username" name="username" required value="<?= ($_SERVER['REQUEST_METHOD'] === 'GET') ? session()->get('username') : set_value('username') ?>" />
+                    <?= form_label('Username', 'username', ['class' => 'form-label']) ?>
+                    <?= form_input('username', set_value('username', session()->get('username'), false), ['id' => 'username', 'class' => 'form-control'], 'text') ?>
                 </div>
 
                 <div class="mb-3">
-                    <label for="old-pass" class="form-label">Old pass</label>
-                    <input type="password" class="form-control" id="old-pass" name="old-pass" value="<?= set_value('old-pass') ?>" />
+                    <?= form_label('Old pass', 'old-pass', ['class' => 'form-label']) ?>
+                    <?= form_password('old-pass', set_value('old-pass', '', false), ['id' => 'old-pass', 'class' => 'form-control']) ?>
                 </div>
 
                 <div class="mb-3">
-                    <label for="new-pass" class="form-label">New pass</label>
-                    <input type="password" class="form-control" id="new-pass" name="new-pass" value="<?= set_value('new-pass') ?>" />
+                    <?= form_label('New password', 'new-pass', ['class' => 'form-label']) ?>
+                    <?= form_password('new-pass', set_value('new-pass', '', false), ['id' => 'new-pass', 'class' => 'form-control']) ?>
                 </div>
 
                 <div class="mb-3">
-                    <label for="conf-new-pass" class="form-label">Confirm new pass</label>
-                    <input type="password" class="form-control" id="confirm-pass" name="confirm-pass" value="<?= set_value('confirm-pass') ?>" />
+                    <?= form_label('Confirm password', 'confirm-pass', ['class' => 'form-label']) ?>
+                    <?= form_password('confirm-pass', set_value('confirm-pass', '', false), ['id' => 'confirm-pass', 'class' => 'form-control']) ?>
                 </div>
 
                 <div class="mb-3">
-                    <label for="birthdate" class="form-label">Date of Birth</label>
-                    <input type="date" class="form-control" id="birthdate" name="birthdate" required value="<?= ($_SERVER['REQUEST_METHOD'] === 'GET') ? session()->get('birthdate') : set_value('birthdate') ?>" />
+                    <?= form_label('Date of Birth', 'birthdate', ['class' => 'form-label']) ?>
+                    <?= form_input('birthdate', set_value('birthdate', session()->get('birthdate'), false), ['id' => 'birthdate', 'class' => 'form-control'], 'date') ?>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <?= form_submit('submit', 'Update', ['class' => 'btn btn-primary']) ?>
                 </div>
 
             <?= form_close() ?>
