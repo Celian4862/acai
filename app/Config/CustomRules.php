@@ -7,6 +7,19 @@ use App\Models\AccountsModel;
 class CustomRules
 {
     /**
+     * Checks if the inputted username or email exists in the database
+     * @param mixed $value
+     * @return mixed
+     */
+    public function name_email_exists($value, $params, $data) {
+        $model = model(AccountsModel::class);
+
+        $account = $model->getAccount($data[$params]);
+
+        return $account !== null;
+    }
+
+    /**
      * Checks if the inputted email is unique
      * @param mixed $value
      * @return bool
@@ -34,7 +47,7 @@ class CustomRules
      * @return bool
      */
     public function password_ok($value) {
-        return strlen($value) < 8 || !preg_match("/^(?=.*\w)(?=.*\d)(?=.*\W)[\w\d\W]{8,}$/", $value) && strlen($value) < 16;
+        return (strlen($value) > 8 && preg_match("/^(?=.*\w)(?=.*\d)(?=.*\W)[\w\d\W]{8,}$/", $value)) || strlen($value) > 16;
     }
 
     /**
@@ -55,13 +68,11 @@ class CustomRules
      * @param mixed $value
      * @return bool
      */
-    public function correct_password($value) {
+    public function correct_password($value, $params, $data) {
         $model = model(AccountsModel::class);
 
-        $account = $model->getAccount(session()->get('username'));
+        $account = $model->getAccount($data[$params]);
 
         return password_verify($value, $account['password']);
     }
-
-    
 }
