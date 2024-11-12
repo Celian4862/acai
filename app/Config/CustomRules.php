@@ -9,7 +9,9 @@ class CustomRules
     /**
      * Checks if the inputted username or email exists in the database
      * @param mixed $value
-     * @return mixed
+     * @param mixed $params
+     * @param mixed $data
+     * @return bool
      */
     public function name_email_exists($value, $params, $data) {
         $model = model(AccountsModel::class);
@@ -66,6 +68,8 @@ class CustomRules
     /**
      * Checks if the password matches the current password of the current user
      * @param mixed $value
+     * @param mixed $params
+     * @param mixed $data
      * @return bool
      */
     public function correct_password($value, $params, $data) {
