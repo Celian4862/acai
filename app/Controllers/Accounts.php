@@ -72,6 +72,9 @@ class Accounts extends BaseController
     {
         helper('form');
 
+        $seeder = \Config\Database::seeder();
+        $seeder->call('AccountsTable');
+
         $data = $this->request->getPost(['email', 'username', 'password', 'confirm-pass', 'birthdate']);
 
         $validator = service('validation');
