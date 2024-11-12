@@ -17,6 +17,7 @@ $routes->group('accounts', static function ($routes) {
     $routes->post('signup', 'Accounts::create_account');
     $routes->post('forgot-password', 'Accounts::forgot_password');
     $routes->post('settings', 'Accounts::settings');
+    $routes->post('delete-account', 'Accounts::delete_account');
 });
 
 use App\Controllers\Home;
