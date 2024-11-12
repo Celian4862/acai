@@ -9,6 +9,10 @@
                 <?= validation_list_errors() ?>
             </div>
 
+            <div class="text-success text-center">
+                <?= session()->getFlashdata('success') ?>
+            </div>
+
             <?= form_open('accounts/settings') ?>
                 <?= csrf_field() ?>
 
