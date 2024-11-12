@@ -6,7 +6,6 @@
                 <h2>Log In</h2>
 
                 <div class="text-danger">
-                    <?= session()->getFlashdata('error') ?>
                     <?= validation_list_errors() ?>
                 </div>
                 
