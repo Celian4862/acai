@@ -9,27 +9,28 @@
                     <?= validation_list_errors() ?>
                 </div>
                 
-                <form action="/accounts/login" method="POST">
+                <?= form_open('/accounts/login') ?>
                     <?= csrf_field() ?>
+
                     <div class="mb-3">
-                        <label for="name-email" class="form-label">Email address / Username</label>
-                        <input type="text" class="form-control" id="name-email" name="name-email" placeholder="Enter your email or username" required value="<?= set_value('name-email') ?>">
+                        <?= form_label('Email address / Username', 'name-email', ['class' => 'form-label']) ?>
+                        <?= form_input ('name-email', set_value('name-email', '', false), ['id' => 'name-email', 'class' => 'form-control', 'required' => true, 'placeholder' => 'Enter your email or username'], 'text') ?>
                     </div>
                     
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" value="<?= set_value('password') ?>">
+                        <?= form_label('Password', 'password', ['class' => 'form-label']) ?>
+                        <?= form_password('password', set_value('password', '', false), ['id' => 'password', 'class' => 'form-control', 'required' => true, 'placeholder' => 'Enter your password']) ?>
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary">Log In</button>
+                        <?= form_submit('submit', 'Log In', ['class' => 'btn btn-primary']) ?>
                         <a href="/accounts/signup" class="btn btn-outline-secondary">Create account</a>
                     </div>
 
                     <div class="text-center mt-3">
                         <a href="/accounts/forgot-password">Forgot password?</a>
                     </div>
-                </form>
+                <?= form_close() ?>
             </div>
         </div>
     </div>
