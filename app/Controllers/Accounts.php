@@ -149,20 +149,25 @@ class Accounts extends BaseController
 
         $model = model(AccountsModel::class);
 
-        // Update account details
-        $model->save([
+        $new_data = [
             'id' => $model->getAccount(session()->get('username'))['id'],
             'email' => $post['email'],
             'username' => $post['username'],
-            'password' => password_hash($post['new-pass'], PASSWORD_DEFAULT),
-            'birthdate' => $post['birthdate']
-        ]);
+            'birthdate' => $post['birthdate'],
+        ];
+
+        if ($post['new-pass'] != null) {
+            $new_data['password'] = password_hash($post['new-pass'], PASSWORD_DEFAULT);
+        }
+
+        // Update account details
+        $model->save($new_data);
 
         // Prepare new session data
         $account_data = [
             'email' => $post['email'],
             'username' => $post['username'],
-            'birthdate' => $post['birthdate']
+            'birthdate' => $post['birthdate'],
         ];
 
         // Update session data
