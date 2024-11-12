@@ -43,6 +43,10 @@ class Validation extends BaseConfig
     // Rules
     // --------------------------------------------------------------------
 
+    /**
+     * Ruleset for login form
+     * @var array
+     */
     public array $login = [
         'name-email' => [
             'label' => 'Username / Email',
