@@ -96,11 +96,12 @@ class Validation extends BaseConfig
         ],
         'password' => [
             'label' => 'Password',
-            'rules' => 'required|min_length[8]|max_length[255]',
+            'rules' => 'required|min_length[8]|max_length[255]|password_ok',
             'errors' => [
                 'required' => '{field} is required.',
                 'min_length' => '{field} must be at least {param} characters.',
                 'max_length' => '{field} may contain up to {param} characters.',
+                'password_ok' => '{field} must contain at least one letter, number, and symbol.',
             ],
         ],
         'confirm-pass' => [
