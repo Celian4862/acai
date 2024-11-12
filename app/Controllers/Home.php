@@ -20,7 +20,7 @@ class Home extends BaseController
         }
 
         if (session()->has('logged_in') && session()->get('logged_in') === true) {
-            return redirect()->to('accounts/dashboard');
+            return redirect()->to('/accounts/dashboard');
         }
 
         return view('templates/header', ['title' => ucwords(str_replace('-', ' ', $page))])

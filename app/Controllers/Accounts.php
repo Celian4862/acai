@@ -13,7 +13,7 @@ class Accounts extends BaseController
         }
 
         if (session()->has('logged_in') && session()->get('logged_in') === true) {
-            return redirect()->to('accounts/dashboard');
+            return redirect()->to('/accounts/dashboard');
         }
 
         helper('form');
@@ -50,7 +50,7 @@ class Accounts extends BaseController
         $validator = service('validation');
 
         if (! $validator->run($data, 'login')) {
-            return redirect()->to('accounts/login')->withInput();
+            return redirect()->to('/accounts/login')->withInput();
         }
 
         $post = $validator->getValidated();
@@ -68,7 +68,7 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return redirect()->to('accounts/dashboard');
+        return redirect()->to('/accounts/dashboard');
     }
 
     public function create_account()
@@ -106,7 +106,7 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return redirect()->to('accounts/dashboard');
+        return redirect()->to('/accounts/dashboard');
     }
 
     public function forgot_password() {
@@ -128,7 +128,7 @@ class Accounts extends BaseController
                 ],
             ],
         ])) {
-            return redirect()->to('accounts/forgot-password')->withInput();
+            return redirect()->to('/accounts/forgot-password')->withInput();
         }
 
         $post = $this->validator->getValidated();
@@ -183,14 +183,37 @@ class Accounts extends BaseController
 
         // Redirect to settings page with success message
         session()->setFlashdata('success', 'Account updated successfully');
-        return redirect()->to('accounts/settings');
+        return redirect()->to('/accounts/settings');
     }
 
+    /**
+     * Destroys the current user's session to log out.
+     * @return \CodeIgniter\HTTP\RedirectResponse
+     */
     public function logout() {
         if (session()->get('logged_in') && session()->get('logged_in') === true) {
             session()->set('logged_in', false);
             session()->destroy();
         }
         return redirect()->to('/');
+    }
+
+    /**
+     * Deletes account
+     * @return \CodeIgniter\HTTP\RedirectResponse
+     */
+    public function delete_account() {
+        helper('form');
+
+        $model = model(AccountsModel::class);
+        $user_id = $model->getAccount(session()->get('username'))['id'];
+
+        if ($model->delete($user_id)) {
+            session()->destroy();
+            return redirect()->to('/');
+        } else {
+            session()->setFlashdata('error', 'Failed to delete account');
+            return redirect()->back();
+        }
     }
 }
