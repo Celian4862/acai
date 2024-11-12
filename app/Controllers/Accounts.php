@@ -138,7 +138,8 @@ class Accounts extends BaseController
         // Send email with password reset link
 
         // Go back to forgot-password page with success message
-        return redirect()->back()->withInput();
+        session()->setFlashdata('success', 'Password reset link sent to email');
+        return redirect()->back();
     }
 
     public function settings() {
@@ -180,6 +181,8 @@ class Accounts extends BaseController
         // Update session data
         session()->set($account_data);
 
+        // Redirect to settings page with success message
+        session()->setFlashdata('success', 'Account updated successfully');
         return redirect()->to('accounts/settings');
     }
 
