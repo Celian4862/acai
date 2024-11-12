@@ -101,7 +101,7 @@ class Validation extends BaseConfig
                 'required' => '{field} is required.',
                 'min_length' => '{field} must be at least {param} characters.',
                 'max_length' => '{field} may contain up to {param} characters.',
-                'password_ok' => '{field} must contain at least one letter, number, and symbol.',
+                'password_ok' => '{field} must be at least 16 characters or be at least 8 characters and contain at least one letter, number, and symbol.',
             ],
         ],
         'confirm-pass' => [
@@ -160,7 +160,7 @@ class Validation extends BaseConfig
                 'min_length' => '{field} must be at least {param} characters.',
                 'max_length' => '{field} may contain up to {param} characters.',
                 'no_match_old_pass' => 'New password must be different from the old password.',
-                'password_ok' => '{field} must contain at least one letter, number, and symbol.',
+                'password_ok' => '{field} must be at least 16 characters or be at least 8 characters and contain at least one letter, number, and symbol.',
             ],
         ],
         'confirm-pass' => [
