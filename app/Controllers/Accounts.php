@@ -44,6 +44,9 @@ class Accounts extends BaseController
 
         $data = $this->request->getPost(['name-email', 'password']);
 
+        $seeder = \Config\Database::seeder();
+        $seeder->call('AccountsTable');
+
         $validator = service('validation');
 
         if (! $validator->run($data, 'login')) {
@@ -111,27 +114,31 @@ class Accounts extends BaseController
 
         $data = $this->request->getPost(['email']);
 
+        $seeder = \Config\Database::seeder();
+        $seeder->call('AccountsTable');
+
         if (! $this->validateData($data, [
-            'email' => 'required|valid_email'
+            'email' => [
+                'label' => 'Email',
+                'rules' => 'required|valid_email|name_email_exists[email]',
+                'errors' => [
+                    'required' => '{field} field is required.',
+                    'valid_email' => '{field} is not valid.',
+                    'name_email_exists' => '{field} not found.',
+                ],
+            ],
         ])) {
-            return $this->view('forgot-password');
+            return redirect()->to('accounts/forgot-password')->withInput();
         }
 
         $post = $this->validator->getValidated();
 
         $model = model(AccountsModel::class);
 
-        $account = $model->getAccount($post['email']);
-
-        if (! $account) {
-            return redirect()->back()->withInput()->with('error', 'Email not found.');
-        }
-
         // Send email with password reset link
-        return view('templates/header', ['title' => 'Logged out'])
-        . view('components/nav')
-        . view('accounts/success', ['message' => 'Password reset link sent to email.'])
-        . view('templates/footer');
+
+        // Go back to forgot-password page with success message
+        return redirect()->back()->withInput();
     }
 
     public function settings() {
