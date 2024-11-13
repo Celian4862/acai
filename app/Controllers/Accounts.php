@@ -13,7 +13,7 @@ class Accounts extends BaseController
         }
 
         if (session()->has('logged_in') && session()->get('logged_in') === true) {
-            return redirect()->to('/accounts/dashboard');
+            return redirect()->to('/forum/dashboard');
         }
 
         helper('form');
@@ -68,7 +68,7 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return redirect()->to('/accounts/dashboard');
+        return redirect()->to('/forum/dashboard');
     }
 
     public function create_account()
@@ -106,7 +106,7 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return redirect()->to('/accounts/dashboard');
+        return redirect()->to('/forum/dashboard');
     }
 
     public function forgot_password() {
