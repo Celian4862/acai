@@ -53,19 +53,6 @@ class CustomRules
     }
 
     /**
-     * Checks if the inputted password does not match the current password of the current user
-     * @param mixed $value
-     * @return bool
-     */
-    public function no_match_old_pass($value) {
-        $model = model(AccountsModel::class); // Initialise the model instance
-
-        $account = $model->getAccount(session()->get('username')); // Get the current user's account
-
-        return ! password_verify($value, $account['password']); // Return true if the inputted password matches the current user's password
-    }
-
-    /**
      * Checks if the password matches the current password of the inputted user (field name in $params). This is for login.
      * @param mixed $value
      * @param mixed $params
@@ -75,24 +62,12 @@ class CustomRules
     public function correct_password($value, $params, $data) {
         $model = model(AccountsModel::class);
 
-        $account = $model->getAccount($data[$params]);
+        if ($params === 'name-email') {
+            $account = $model->getAccount($data[$params]);
+        } else {
+            $account = $model->getAccount(session()->get('username'));
+        }
 
         return password_verify($value, $account['password']);
-    }
-
-    /**
-     * Checks if the old password is correct. This is for updating user settings.
-     * The session variable call is fine because this method is only called a session is indeed active.
-     * @param mixed $value
-     * @param mixed $params
-     * @param mixed $data
-     * @return bool
-     */
-    public function old_pass_correct($value, $params, $data) {
-        $model = model(AccountsModel::class);
-
-        $account = $model->getAccount(session()->get('username'));
-
-        return password_verify($data[$params], $account['password']);
     }
 }
