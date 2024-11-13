@@ -148,16 +148,17 @@ class Validation extends BaseConfig
         ],
         'old-pass' => [
             'label' => 'Old password',
-            'rules' => 'permit_empty|min_length[8]|max_length[255]',
+            'rules' => 'permit_empty|min_length[8]|max_length[255]|old_pass_correct[old-pass]',
             'errors' => [
                 'min_length' => '{field} must be at least {param} characters.',
                 'max_length' => '{field} may contain up to {param} characters.',
+                'old_pass_correct' => 'Old password is incorrect or missing.',
                 'correct_password' => 'Incorrect password.',
             ],
         ],
         'new-pass' => [
             'label' => 'New password',
-            'rules' => 'permit_empty|min_length[8]|max_length[255]|old_pass_correct[old-pass]|no_match_old_pass|password_ok',
+            'rules' => 'required_with[old-pass]|min_length[8]|max_length[255]|no_match_old_pass|password_ok',
             'errors' => [
                 'min_length' => '{field} must be at least {param} characters.',
                 'max_length' => '{field} may contain up to {param} characters.',
