@@ -82,6 +82,7 @@ class CustomRules
 
     /**
      * Checks if the old password is correct. This is for updating user settings.
+     * The session variable call is fine because this method is only called a session is indeed active.
      * @param mixed $value
      * @param mixed $params
      * @param mixed $data
@@ -90,7 +91,7 @@ class CustomRules
     public function old_pass_correct($value, $params, $data) {
         $model = model(AccountsModel::class);
 
-        $account = $model->getAccount($data['username']);
+        $account = $model->getAccount(session()->get('username'));
 
         return password_verify($data[$params], $account['password']);
     }
