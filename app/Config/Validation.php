@@ -81,17 +81,19 @@ class Validation extends BaseConfig
             'rules' => 'required|valid_email|is_unique[accounts.email]',
             'errors' => [
                 'required' => '{field} is required.',
-                'valid_email' => 'Email is not valid.',
-                'is_unique' => 'Email is already in use.',
+                'valid_email' => '{field} is not valid.',
+                'is_unique' => '{field} is already in use.',
             ],
         ],
         'username' => [
             'label' => 'Username',
-            'rules' => 'required|alpha_numeric|min_length[6]|max_length[30]',
+            'rules' => 'required|alpha_numeric|min_length[6]|max_length[30]|is_unique[accounts.username]',
             'errors' => [
                 'required' => '{field} is required.',
                 'alpha_numeric' => '{field} must contain only letters and numbers.',
+                'min_length[6]' => '{field} must be at least six letters.',
                 'max_length' => '{field} may contain up to {param} characters.',
+                'is_unique' => '{field} is already in use.',
             ],
         ],
         'password' => [
@@ -108,7 +110,7 @@ class Validation extends BaseConfig
             'label' => 'Password confirmation',
             'rules' => 'required|matches[password]',
             'errors' => [
-                'matches' => 'Passwords do not match.',
+                'matches' => '{field} does not match.',
             ],
         ],
         'birthdate' => [
@@ -136,7 +138,7 @@ class Validation extends BaseConfig
         ],
         'username' => [
             'label' => 'Username',
-            'rules' => 'required|alpha_numeric|max_length[30]|unique_username',
+            'rules' => 'required|alpha_numeric|min_length[6]|max_length[30]|unique_username',
             'errors' => [
                 'required' => '{field} is required.',
                 'alpha_numeric' => '{field} must contain only letters and numbers.',
