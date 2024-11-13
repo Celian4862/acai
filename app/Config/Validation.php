@@ -146,7 +146,7 @@ class Validation extends BaseConfig
         ],
         'old-pass' => [
             'label' => 'Old password',
-            'rules' => 'permit_empty|min_length[8]|max_length[255]|correct_password[username]',
+            'rules' => 'permit_empty|min_length[8]|max_length[255]',
             'errors' => [
                 'min_length' => '{field} must be at least {param} characters.',
                 'max_length' => '{field} may contain up to {param} characters.',
@@ -155,11 +155,12 @@ class Validation extends BaseConfig
         ],
         'new-pass' => [
             'label' => 'New password',
-            'rules' => 'permit_empty|min_length[8]|max_length[255]|no_match_old_pass|password_ok',
+            'rules' => 'permit_empty|min_length[8]|max_length[255]|old_pass_correct[old-pass]|no_match_old_pass|password_ok',
             'errors' => [
                 'min_length' => '{field} must be at least {param} characters.',
                 'max_length' => '{field} may contain up to {param} characters.',
-                'no_match_old_pass' => 'New password must be different from the old password.',
+                'old_pass_correct' => 'Old password is incorrect or missing.',
+                'no_match_old_pass' => '{field} must be different from old password.',
                 'password_ok' => '{field} must be at least 16 characters or be at least 8 characters and contain at least one letter, number, and symbol.',
             ],
         ],
