@@ -1,12 +1,13 @@
 <div class="container mt-5">
     <h2 class="text-center">Sign Up</h2>
 
-    <div id="errors" class="text-danger text-center">
-        <?= validation_list_errors() ?>
-    </div>
-
     <div class="row justify-content-center">
         <div class="col-md-4">
+            
+            <div class="text-danger">
+                <?= validation_list_errors() ?>
+            </div>
+        
             <?= form_open('/accounts/signup') ?>
                 <?= csrf_field() ?>
 
