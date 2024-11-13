@@ -50,7 +50,7 @@ p {
 @keyframes slideFadeIn {
     0% {
         opacity: 0;
-        transform: translateX(-10%);
+        transform: translateX(0);
     }
     100% {
         opacity: 1;
@@ -117,11 +117,6 @@ p {
 
 #about-us-intro {
     padding: 0 5%;
-}
-
-#errors ul { /* For form errors */
-    list-style-type: none;
-    padding: 0;
 }
 
 #support-list {
