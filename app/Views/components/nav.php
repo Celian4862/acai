@@ -5,7 +5,7 @@
     <div class="d-inline-flex">
         <ul class="p-0 m-0">
             <?php if (session()->has('logged_in') && session()->get('logged_in') === true) : ?>
-                <li class="d-inline-block mx-4"><a href="/accounts/dashboard">Dashboard</a></li>
+                <li class="d-inline-block mx-4"><a href="/forum/dashboard">Dashboard</a></li>
             <?php else : ?>
                 <li class="d-inline-block mx-4"><a href="/about-us">About Us</a></li>
                 <li class="d-inline-block mx-4"><a href="/support">Support</a></li>
