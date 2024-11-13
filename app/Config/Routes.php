@@ -6,6 +6,10 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
+$routes->group('forum', static function ($routes) {
+    $routes->get('dashboard', 'Forum::view');
+});
+
 $routes->group('accounts', static function ($routes) {
     $routes->get('/', 'Accounts::view');
     $routes->get('login', 'Accounts::view');
