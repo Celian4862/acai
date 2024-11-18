@@ -157,7 +157,7 @@ class Validation extends BaseConfig
         ],
         'new-pass' => [
             'label' => 'New password',
-            'rules' => 'required_with[old-pass]|min_length[8]|max_length[255]|differs[old-pass]|password_ok',
+            'rules' => 'required_with[old-pass]|permit_empty|min_length[8]|max_length[255]|differs[old-pass]|password_ok',
             'errors' => [
                 'required_with' => '{field} is required with {param}.',
                 'min_length' => '{field} must be at least {param} characters.',
