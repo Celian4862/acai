@@ -20,4 +20,4 @@
         <link rel="stylesheet" href="/css/style.css" />
         <script src="/js/script.js" defer></script>
     </head>
-    <body>
+    <body class="d-flex flex-column p-0 m-0 min-vh-100">
