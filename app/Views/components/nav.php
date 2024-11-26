@@ -8,7 +8,6 @@
                 <li class="d-inline-block mx-4"><a href="/forum/dashboard">Dashboard</a></li>
             <?php else : ?>
                 <li class="d-inline-block mx-4"><a href="/about-us">About Us</a></li>
-                <li class="d-inline-block mx-4"><a href="/support">Support</a></li>
             <?php endif ?>
         </ul>
         <form id="search" class="px-5">
