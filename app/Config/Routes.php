@@ -27,5 +27,4 @@ $routes->group('accounts', static function ($routes) {
 use App\Controllers\Home;
 
 $routes->get('/', [Home::class, 'index']);
-$routes->get('home', [Home::class, 'index']);
 $routes->get('(:segment)', [Home::class, 'view']);

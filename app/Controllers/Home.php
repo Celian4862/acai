@@ -19,10 +19,6 @@ class Home extends BaseController
             throw new PageNotFoundException($page);
         }
 
-        if (session()->has('logged_in') && session()->get('logged_in') === true) {
-            return redirect()->to('/accounts/dashboard');
-        }
-
         return view('templates/header', ['title' => ucwords(str_replace('-', ' ', $page))])
             . view('components/nav')
             . view('pages/' . $page)
