@@ -9,10 +9,6 @@
                 <li class="d-inline-block mx-4"><a href="/forum/dashboard">Dashboard</a></li>
             <?php endif ?>
         </ul>
-        <form id="search" class="px-5">
-            <input id="search-bar" name="search-bar" type="text" placeholder="Search...">
-            <button type="submit">Search</button>
-        </form>
         <ul class="p-0 m-0">
             <?php if (session()->has('logged_in') && session()->get('logged_in') === true) : ?>
                 <li class="d-inline-block mx-4"><a href="/accounts/settings">Settings</a></li>
