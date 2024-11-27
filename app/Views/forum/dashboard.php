@@ -1,7 +1,14 @@
 <div class="container mt-5">
   <h2 class="text-center">Dashboard</h2>
-  <?php foreach ($posts as $post): ?>
-    <div class="row justify-content-center">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card mt-3">
+        <div class="card-body">
+          <a href="/forum/newpost" class="btn btn-primary">+ Add new post</a>
+        </div>
+      </div>
+    </div>
+    <?php foreach ($posts as $post): ?>
       <div class="col-md-4">
         <div class="card mt-3">
           <div class="card-header">
@@ -16,6 +23,6 @@
           </div>
         </div>
       </div>
-    </div>
-  <?php endforeach ?>
+    <?php endforeach ?>
+  </div>
 </div>
