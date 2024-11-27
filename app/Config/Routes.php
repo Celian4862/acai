@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 $routes->group('forum', static function ($routes) {
-    $routes->get('dashboard', 'Forum::view');
+    $routes->get('(:segment)', 'Forum::view/$1');
 });
 
 $routes->group('accounts', static function ($routes) {
@@ -24,7 +24,5 @@ $routes->group('accounts', static function ($routes) {
     $routes->post('delete-account', 'Accounts::delete_account');
 });
 
-use App\Controllers\Home;
-
-$routes->get('/', [Home::class, 'index']);
-$routes->get('(:segment)', [Home::class, 'view']);
+$routes->get('/', 'Home::index');
+$routes->get('(:segment)', 'Home::view/$1');
