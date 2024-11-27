@@ -22,10 +22,10 @@ public function view($page = 'dashboard') {
     $data = session()->get();
     $data['posts'] = $posts;
 
-    return view('templates/header', ['title' => ucwords(str_replace('-', ' ', $page))])
+    return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
       . view('components/nav')
       . view('forum/' . $page, $data)
-      . view('templates/footer');
+      . view('components/footer');
     }
   
     return redirect('Accounts::view');

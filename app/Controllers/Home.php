@@ -8,10 +8,10 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('templates/header', ['title' => 'Adaptive Community-Assisted Infrastructure'])
+        return view('components/header', ['title' => 'Adaptive Community-Assisted Infrastructure'])
             . view('components/nav')
             . view('pages/home')
-            . view('templates/footer');
+            . view('components/footer');
     }
 
     public function view(string $page) {
@@ -19,9 +19,9 @@ class Home extends BaseController
             throw new PageNotFoundException($page);
         }
 
-        return view('templates/header', ['title' => ucwords(str_replace('-', ' ', $page))])
+        return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
             . view('components/nav')
             . view('pages/' . $page)
-            . view('templates/footer');
+            . view('components/footer');
     }
 }

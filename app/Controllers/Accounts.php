@@ -18,10 +18,10 @@ class Accounts extends BaseController
 
         helper('form');
 
-        return view('templates/header', ['title' => ucwords(str_replace('-', ' ', $page))])
+        return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
             . view('components/nav')
             . view('accounts/' . $page)
-            . view('templates/footer');
+            . view('components/footer');
     }
 
     public function user_views($page = 'dashboard') {
@@ -30,10 +30,10 @@ class Accounts extends BaseController
         }
 
         if (session()->has('logged_in') && session()->get('logged_in') === true) {
-            return view('templates/header', ['title' => ucwords(str_replace('-', ' ', $page))])
+            return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
                 . view('components/nav')
                 . view('accounts/' . $page, session()->get())
-                . view('templates/footer');
+                . view('components/footer');
         }
 
         return redirect('Accounts::view');
