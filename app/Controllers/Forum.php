@@ -8,26 +8,30 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Forum extends BaseController
 {
-public function view($page = 'dashboard') {
-  if (!is_file(APPPATH.'/Views/forum/'.$page.'.php')) {
-    throw new PageNotFoundException($page);
+  public function view($page = 'dashboard') {
+    if (!is_file(APPPATH.'/Views/forum/'.$page.'.php')) {
+      throw new PageNotFoundException($page);
+    }
+
+    if (session()->has('logged_in') && session()->get('logged_in') === true) {
+      $seeder = \Config\Database::seeder();
+      $seeder->call('PostsTable');
+
+      $model = model(ForumModel::class);
+      $posts = $model->getPosts();
+      $data = session()->get();
+      $data['posts'] = $posts;
+
+      return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
+        . view('components/nav')
+        . view('forum/' . $page, $data)
+        . view('components/footer');
+    }
+
+    return redirect('Accounts::view');
   }
 
-  if (session()->has('logged_in') && session()->get('logged_in') === true) {
-    $seeder = \Config\Database::seeder();
-    $seeder->call('PostsTable');
+  public function newpost() {
     
-    $model = model(ForumModel::class);
-    $posts = $model->getPosts();
-    $data = session()->get();
-    $data['posts'] = $posts;
-
-    return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
-      . view('components/nav')
-      . view('forum/' . $page, $data)
-      . view('components/footer');
-    }
-  
-    return redirect('Accounts::view');
   }
 }

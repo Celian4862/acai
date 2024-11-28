@@ -8,6 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->group('forum', static function ($routes) {
     $routes->get('(:segment)', 'Forum::view/$1');
+    $routes->get('newpost', 'Forum::newpost');
 });
 
 $routes->group('accounts', static function ($routes) {
