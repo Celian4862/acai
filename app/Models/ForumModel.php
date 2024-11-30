@@ -12,7 +12,6 @@ class ForumModel extends Model
 
   public function getPosts($slug = false)
   {
-    // Will need to add a method later on that shows only the posts that the user has created, specifically for the dashboard page.
     if ($slug === false) {
       return $this->findAll();
     }
