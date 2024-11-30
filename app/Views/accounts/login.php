@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col login-bg"></div>
         <div class="col justify-content-center">
-            <div class = "m-5">
+            <div class="m-5">
                 <h2>Log In</h2>
 
                 <div class="text-danger">
