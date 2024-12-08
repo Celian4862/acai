@@ -192,7 +192,7 @@ class Accounts extends BaseController
                 ],
             ],
         ])) {
-            return redirect()->to('/accounts/forgot-password')->withInput();
+            return redirect()->back()->withInput();
         }
 
         $post = $this->validator->getValidated();
