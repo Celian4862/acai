@@ -200,10 +200,42 @@ class Accounts extends BaseController
         $model = model(AccountsModel::class);
 
         // Send email with password reset link
+        $token = bin2hex(random_bytes(50));
+
+        helper('date');
+        $expires = date('Y-m-d H:i:s', now(app_timezone()) + 300);
+
+        $model->save([
+            'id' => $model->getAccount($post['email'])['id'],
+            'reset_token' => $token,
+            'token_expiry' => $expires
+        ]);
+
+        $email = service('email');
+
+        $email->setFrom('noreply@acai.com', 'Forum Admin');
+        $email->setTo($post['email']);
+
+        $email->setSubject('Password reset request');
+        $email->setMessage(view('emails/reset-password', ['token' => $token]));
+
+        if (! $email->send()) {
+            $this->validateData($data, [
+                'email' => [
+                    'rules' => 'max_length[0]',
+                    'errors' => ['max_length' => 'Failed to send email.']
+                ]
+            ]);
+            return redirect()->back()->withInput();
+        }
 
         // Go back to forgot-password page with success message
         session()->setFlashdata('success', 'Password reset link sent to email');
         return redirect()->back();
+    }
+
+    public function reset_password(){
+        
     }
 
     public function settings() {
