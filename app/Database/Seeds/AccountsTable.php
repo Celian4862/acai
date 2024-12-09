@@ -14,7 +14,7 @@ class AccountsTable extends Seeder
             username VARCHAR(30) NOT NULL,
             password VARCHAR(255) NOT NULL,
             birthdate DATE NOT NULL,
-            reset_token VARCHAR(255) DEFAULT NULL,
+            reset_token VARCHAR(50) DEFAULT NULL,
             token_expiry TIMESTAMP NULL DEFAULT NULL
         );');
     }
