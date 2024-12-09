@@ -16,6 +16,26 @@ class Accounts extends BaseController
             return redirect()->to('/forum/dashboard');
         }
 
+        if ($page === 'reset-password') {
+            helper('date');
+            $reset_token = $this->request->getGet('reset_token');
+            $account = model(AccountsModel::class)->where('reset_token', $reset_token)->first();
+            if ($reset_token === null || $reset_token === '' || $account === null || $account['token_expiry'] < date('Y-m-d H:i:s', now(app_timezone()))) {
+                return redirect()->to('/accounts/forgot-password');
+            } else {
+                helper('form');
+                return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
+                    . view('accounts/' . $page, ['token' => $reset_token])
+                    . view('components/footer');
+            }
+        }
+
+        if ($page === 'reset-success') {
+            if (session()->getFlashdata('success') !== true) {
+                return redirect()->to('/accounts/login');
+            }
+        }
+
         helper('form');
 
         return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
@@ -200,7 +220,9 @@ class Accounts extends BaseController
         $model = model(AccountsModel::class);
 
         // Send email with password reset link
-        $token = bin2hex(random_bytes(50));
+        do {
+            $token = bin2hex(random_bytes(50));
+        } while ($model->where('reset_token', $token)->first() !== null); // Generate a unique token
 
         helper('date');
         $expires = date('Y-m-d H:i:s', now(app_timezone()) + 300);
@@ -213,11 +235,21 @@ class Accounts extends BaseController
 
         $email = service('email');
 
-        $email->setFrom('noreply@acai.com', 'Forum Admin');
+        $email->initialize([
+            'protocol' => env('protocol'),
+            'SMTPHost' => env('smtp.host'),
+            'SMTPUser' => env('smtp.user'),
+            'SMTPPass' => env('smtp.password'),
+            'SMTPPort' => (int) env('smtp.port'),
+            'SMTPCrypto' => env('smtp.crypto'),
+            'fromEmail' => env('from.email'),
+            'fromName' => env('from.name'),
+        ]);
+
         $email->setTo($post['email']);
 
         $email->setSubject('Password reset request');
-        $email->setMessage(view('emails/reset-password', ['token' => $token]));
+        $email->setMessage('Please click this link to reset your password: ' . site_url('/accounts/reset-password?reset_token=' . $token) . '. Please complete the password reset process within five minutes since your token will become invalid after that time.');
 
         if (! $email->send()) {
             $this->validateData($data, [
@@ -235,7 +267,51 @@ class Accounts extends BaseController
     }
 
     public function reset_password(){
-        
+        // Check if token is still valid after submission
+        helper('form');
+        $data = $this->request->getPost(['reset-token', 'password', 'confirm-password']);
+
+        $reset_token = $data['reset-token'];
+        $model = model(AccountsModel::class);
+        $account = $model->where('reset_token', $reset_token)->first();
+        helper('date');
+
+        if ($account === null || $account['token_expiry'] < date('Y-m-d H:i:s', now(app_timezone()))) {
+            return redirect()->to('/accounts/forgot-password');
+        }
+
+        if (! $this->validateData($data, [
+            'password' => [
+                'label' => 'Password',
+                'rules' => 'required|min_length[8]|max_length[255]|password_ok',
+                'errors' => [
+                    'required' => '{field} is required.',
+                    'min_length' => '{field} must be at least {param} characters.',
+                    'max_length' => '{field} may contain up to {param} characters.',
+                    'password_ok' => '{field} must be at least 16 characters or be at least 8 characters and contain at least one letter, number, and symbol.',
+                ],
+            ],
+            'confirm-password' => [
+                'rules' => 'matches[password]',
+                'errors' => [
+                    'matches' => 'Passwords do not match.',
+                ]
+            ]
+        ])) {
+            return redirect()->back()->withInput();
+        }
+
+        $post = $this->validator->getValidated();
+
+        $model->save([
+            'id' => $account['id'],
+            'password' => password_hash($post['password'], PASSWORD_DEFAULT),
+            'reset_token' => null,
+            'token_expiry' => null
+        ]);
+
+        session()->setFlashdata('success', true);
+        return redirect()->to('/accounts/reset-success');
     }
 
     public function settings() {
@@ -284,7 +360,6 @@ class Accounts extends BaseController
                 ],
             ],
             'confirm-pass' => [
-                'label' => 'Password confirmation',
                 'rules' => 'matches[new-pass]',
                 'errors' => [
                     'matches' => 'Passwords do not match.',

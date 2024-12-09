@@ -4,6 +4,7 @@
     <div class="col-md-4">
       <?= form_open('accounts/reset-password') ?>
         <?= csrf_field() ?>
+        <?= form_hidden('reset-token', $token) ?>
   
         <div class="mb-3">
           <?= form_label('New password', 'password', ['class' => 'form-label']) ?>
@@ -12,7 +13,7 @@
 
         <div class="mb-3">
           <?= form_label('Confirm password', 'confirm-password', ['class' => 'form-label']) ?>
-          <?= form_input('confirm-password', '', ['id' => 'confirm-password', 'class' => 'form-control', 'required' => true], 'password') ?>
+          <?= form_password('confirm-password', '', ['id' => 'confirm-password', 'class' => 'form-control', 'required' => true]) ?>
   
           <div class="text-danger">
             <?= validation_list_errors() ?>

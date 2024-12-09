@@ -17,6 +17,7 @@ $routes->group('accounts', static function ($routes) {
     $routes->get('signup', 'Accounts::view/signup');
     $routes->get('forgot-password', 'Accounts::view/forgot-password');
     $routes->get('reset-password', 'Accounts::view/reset-password');
+    $routes->get('reset-success', 'Accounts::view/reset-success');
     $routes->get('logout', 'Accounts::logout');
     $routes->get('(:segment)', 'Accounts::user_views/$1');
     $routes->post('login', 'Accounts::login');
