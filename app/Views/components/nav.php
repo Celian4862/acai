@@ -12,8 +12,8 @@
         <ul class="p-0 m-0">
             <?php if (session()->has('logged_in') && session()->get('logged_in') === true) : ?>
                 <li class="d-inline-block mx-4"><a href="/accounts/settings">Settings</a></li>
+                <li class="d-inline-block mx-4"><a href="/forum/newpost">+ Add New Post</a></li>
                 <li class="d-inline-block mx-4"><a href="/logout">Log out</a></li>
-                <li class="d-inline-block mx-4"><a href="/forum/newpost">+</a></li>
             <?php else : ?>
                 <li class="d-inline-block mx-4"><a href="/signup">Sign up</a></li>
                 <li class="d-inline-block mx-4"><a href="/login">Log in</a></li>
