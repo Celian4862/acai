@@ -67,11 +67,11 @@ class Accounts extends BaseController
         if (! $this->validateData($data, [
             'name-email' => [
                 'label' => 'Username / Email',
-                'rules' => 'required|min_length[6]|max_length[30]',
+                'rules' => 'required|alpha_dash|min_length[6]|max_length[30]',
                 'errors' => [
                     'required' => '{field} is required.',
+                    'alpha_dash' => '{field} must contain only letters, numbers, dashes, and underscores.',
                     'min_length' => '{field} must be at least {param} characters.',
-                    'alpha_numeric_punct' => '{field} must contain only letters, numbers, and symbols.',
                     'max_length' => '{field} may contain up to {param} characters.',
                 ],
             ],
@@ -126,10 +126,10 @@ class Accounts extends BaseController
             ],
             'username' => [
                 'label' => 'Username',
-                'rules' => 'required|alpha_numeric|min_length[6]|max_length[30]|is_unique[accounts.username]',
+                'rules' => 'required|alpha_dash|min_length[6]|max_length[30]|is_unique[accounts.username]',
                 'errors' => [
                     'required' => '{field} is required.',
-                    'alpha_numeric' => '{field} must contain only letters and numbers.',
+                    'alpha_dash' => '{field} must contain only letters, numbers, dashes, and underscores.',
                     'min_length[6]' => '{field} must be at least six letters.',
                     'max_length' => '{field} may contain up to {param} characters.',
                     'is_unique' => '{field} is already in use.',
@@ -321,10 +321,10 @@ class Accounts extends BaseController
             ],
             'username' => [
                 'label' => 'Username',
-                'rules' => 'required|alpha_numeric|min_length[6]|max_length[30]|unique_username',
+                'rules' => 'required|alpha_dash|min_length[6]|max_length[30]|unique_username',
                 'errors' => [
                     'required' => '{field} is required.',
-                    'alpha_numeric' => '{field} must contain only letters and numbers.',
+                    'alpha_dash' => '{field} must contain only letters, numbers, dashes, and underscores.',
                     'max_length' => '{field} may contain up to {param} characters.',
                     'unique_username' => '{field} has been taken.',
                 ],
