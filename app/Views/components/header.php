@@ -19,7 +19,7 @@
         <!-- Master CSS -->
         <script src="https://cdn.master.co/css"></script>
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/style.css" />
-        <script src="/js/script.js" defer></script>
+        <link rel="stylesheet" href="/style.css" />
+        <script src="/script.js" defer></script>
     </head>
     <body class="d-flex flex-column p-0 m-0 min-vh-100">
