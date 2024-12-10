@@ -9,22 +9,9 @@
     <?= form_open('/forum/newpost', ['class' => 'row']); ?>
         <?= csrf_field() ?>
         <div class = "col">
-            <?= form_input([
-                'name' => 'title',
-                'id' => 'title',
-                'class' => 'form-control',
-                'placeholder' => 'Title'
-            ]); ?>
-            <?= form_textarea([
-                'name' => 'body',
-                'id' => 'body',
-                'class' => 'form-control',
-                'placeholder' => 'Body'
-            ]); ?>
-            <?= form_submit([
-                'value' => 'Add Post',
-                'class' => 'btn btn-primary mt-2'
-            ]); ?>
+            <?= form_input('title', set_value('title', '', false), ['class' => 'form-control', 'placeholder' => 'Title', 'required' => true]); ?>
+            <?= form_textarea('body', set_value('body', '', false), ['class' => 'form-control', 'placeholder' => 'Body', 'required' => true]); ?>
+            <?= form_submit('submit', 'Add Post', ['class' => 'btn btn-primary mt-2']); ?>
         </div>
     <?= form_close(); ?>
 </div>
