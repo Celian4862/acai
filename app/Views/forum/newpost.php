@@ -10,10 +10,10 @@
         <?= csrf_field() ?>
         <div class="col">
             <div class="mb-3">
-                <?= form_input('title', set_value('title', '', false), ['class' => 'form-control', 'placeholder' => 'Title', 'required' => true]); ?>
+                <?= form_input('title', set_value('title', '', false), ['class' => 'form-control', 'placeholder' => 'Title, 3 - 255 characters', 'required' => true]); ?>
             </div>
             <div class="mb-3">
-                <?= form_textarea('body', set_value('body', '', false), ['class' => 'form-control', 'placeholder' => 'Body', 'required' => true]); ?>
+                <?= form_textarea('body', set_value('body', '', false), ['class' => 'form-control', 'placeholder' => 'Body, 3 - 1000 characters', 'required' => true]); ?>
             </div>
 
             <div id="add-file" class="mb-3">
