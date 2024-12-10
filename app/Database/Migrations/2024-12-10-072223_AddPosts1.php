@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class AddPosts extends Migration
+class AddPosts1 extends Migration
 {
     public function up()
     {
@@ -21,6 +21,8 @@ class AddPosts extends Migration
 
     public function down()
     {
-        //
+        $this->db->disableForeignKeyChecks();
+        $this->forge->dropColumn('posts', 'account_id');
+        $this->db->enableForeignKeyChecks();
     }
 }
