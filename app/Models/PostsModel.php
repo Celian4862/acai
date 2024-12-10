@@ -12,7 +12,7 @@ class PostsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['title', 'slug', 'body'];
+    protected $allowedFields    = ['title', 'slug', 'body', 'account_id'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
