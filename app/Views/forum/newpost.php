@@ -6,12 +6,23 @@
             <?= validation_list_errors() ?>
         </div>
     </div>
-    <?= form_open('/forum/newpost', ['class' => 'row']); ?>
+    <?= form_open_multipart('/forum/newpost', ['class' => 'row']); ?>
         <?= csrf_field() ?>
-        <div class = "col">
-            <?= form_input('title', set_value('title', '', false), ['class' => 'form-control', 'placeholder' => 'Title', 'required' => true]); ?>
-            <?= form_textarea('body', set_value('body', '', false), ['class' => 'form-control', 'placeholder' => 'Body', 'required' => true]); ?>
-            <?= form_submit('submit', 'Add Post', ['class' => 'btn btn-primary mt-2']); ?>
+        <div class="col">
+            <div class="mb-3">
+                <?= form_input('title', set_value('title', '', false), ['class' => 'form-control', 'placeholder' => 'Title', 'required' => true]); ?>
+            </div>
+            <div class="mb-3">
+                <?= form_textarea('body', set_value('body', '', false), ['class' => 'form-control', 'placeholder' => 'Body', 'required' => true]); ?>
+            </div>
+
+            <div id="add-file" class="mb-3">
+                <button type="button" class="btn btn-primary" onclick="addFile()">Add Image</button>
+            </div>
+
+            <div class="mb-3">
+                <?= form_submit('submit', 'Add Post', ['class' => 'btn btn-primary mt-2']); ?>
+            </div>
         </div>
     <?= form_close(); ?>
 </div>
