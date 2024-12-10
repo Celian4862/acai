@@ -67,10 +67,9 @@ class Accounts extends BaseController
         if (! $this->validateData($data, [
             'name-email' => [
                 'label' => 'Username / Email',
-                'rules' => 'required|alpha_dash|min_length[6]|max_length[30]',
+                'rules' => 'required|min_length[6]|max_length[30]',
                 'errors' => [
                     'required' => '{field} is required.',
-                    'alpha_dash' => '{field} must contain only letters, numbers, dashes, and underscores.',
                     'min_length' => '{field} must be at least {param} characters.',
                     'max_length' => '{field} may contain up to {param} characters.',
                 ],
