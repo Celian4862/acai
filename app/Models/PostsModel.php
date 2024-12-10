@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AccountsModel extends Model
+class PostsModel extends Model
 {
-    protected $table            = 'accounts';
+    protected $table            = 'posts';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username', 'email', 'password', 'birthdate', 'reset_token', 'token_expiry'];
+    protected $allowedFields    = ['title', 'slug', 'body'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,10 +44,14 @@ class AccountsModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getAccount($name_email)
+    public function getPosts($slug = false)
     {
-        return $this->where('username', $name_email)
-            ->orWhere('email', $name_email)
+        if ($slug === false) {
+            return $this->findAll();
+        }
+
+        return $this->asArray()
+            ->where(['slug' => $slug])
             ->first();
     }
 }

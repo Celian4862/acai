@@ -21,7 +21,7 @@ class Accounts extends BaseController
             $reset_token = $this->request->getGet('reset_token');
             $account = model(AccountsModel::class)->where('reset_token', $reset_token)->first();
             if ($reset_token === null || $reset_token === '' || $account === null || $account['token_expiry'] < date('Y-m-d H:i:s', now(app_timezone()))) {
-                return redirect()->to('/accounts/forgot-password');
+                return redirect()->to('/forgot-password');
             } else {
                 helper('form');
                 return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
@@ -32,7 +32,7 @@ class Accounts extends BaseController
 
         if ($page === 'reset-success') {
             if (session()->getFlashdata('success') !== true) {
-                return redirect()->to('/accounts/login');
+                return redirect()->to('/login');
             }
         }
 
@@ -63,9 +63,6 @@ class Accounts extends BaseController
         helper('form');
 
         $data = $this->request->getPost(['name-email', 'password']);
-
-        $seeder = \Config\Database::seeder();
-        $seeder->call('AccountsTable');
 
         if (! $this->validateData($data, [
             'name-email' => [
@@ -114,9 +111,6 @@ class Accounts extends BaseController
     public function create_account()
     {
         helper('form');
-
-        $seeder = \Config\Database::seeder();
-        $seeder->call('AccountsTable');
 
         $data = $this->request->getPost(['email', 'username', 'password', 'confirm-pass', 'birthdate']);
 
@@ -197,9 +191,6 @@ class Accounts extends BaseController
         helper('form');
 
         $data = $this->request->getPost(['email']);
-
-        $seeder = \Config\Database::seeder();
-        $seeder->call('AccountsTable');
 
         if (! $this->validateData($data, [
             'email' => [
