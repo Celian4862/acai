@@ -9,7 +9,7 @@
                     <?= validation_list_errors() ?>
                 </div>
                 
-                <?= form_open('/accounts/login') ?>
+                <?= form_open('/login') ?>
                     <?= csrf_field() ?>
 
                     <div class="mb-3">
@@ -24,11 +24,11 @@
 
                     <div class="d-flex justify-content-between">
                         <?= form_submit('submit', 'Log In', ['class' => 'btn btn-primary']) ?>
-                        <a href="/accounts/signup" class="btn btn-outline-secondary">Create account</a>
+                        <a href="/signup" class="btn btn-outline-secondary">Create account</a>
                     </div>
 
                     <div class="text-center mt-3">
-                        <a href="/accounts/forgot-password">Forgot password?</a>
+                        <a href="/forgot-password">Forgot password?</a>
                     </div>
                 <?= form_close() ?>
             </div>

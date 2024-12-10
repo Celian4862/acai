@@ -6,16 +6,16 @@
         <ul class="p-0 m-0">
             <li class="d-inline-block mx-4"><a href="/about-us">About Us</a></li>
             <?php if (session()->has('logged_in') && session()->get('logged_in') === true) : ?>
-                <li class="d-inline-block mx-4"><a href="/forum/dashboard">Dashboard</a></li>
+                <li class="d-inline-block mx-4"><a href="/dashboard">Dashboard</a></li>
             <?php endif ?>
         </ul>
         <ul class="p-0 m-0">
             <?php if (session()->has('logged_in') && session()->get('logged_in') === true) : ?>
                 <li class="d-inline-block mx-4"><a href="/accounts/settings">Settings</a></li>
-                <li class="d-inline-block mx-4"><a href="/accounts/logout">Log out</a></li>
+                <li class="d-inline-block mx-4"><a href="/logout">Log out</a></li>
             <?php else : ?>
-                <li class="d-inline-block mx-4"><a href="/accounts/signup">Sign up</a></li>
-                <li class="d-inline-block mx-4"><a href="/accounts/login">Log in</a></li>
+                <li class="d-inline-block mx-4"><a href="/signup">Sign up</a></li>
+                <li class="d-inline-block mx-4"><a href="/login">Log in</a></li>
             <?php endif ?>
         </ul>
     </div>

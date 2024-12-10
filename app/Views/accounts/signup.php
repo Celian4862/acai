@@ -8,7 +8,7 @@
                 <?= validation_list_errors() ?>
             </div>
         
-            <?= form_open('/accounts/signup') ?>
+            <?= form_open('/signup') ?>
                 <?= csrf_field() ?>
 
                 <div class="mb-3">
@@ -38,7 +38,7 @@
 
                 <div class="d-flex justify-content-between">
                     <?= form_submit('submit', 'Create account', ['class' => 'btn btn-primary']) ?>
-                    <a href="/accounts/login" class="btn btn-outline-secondary">Log in</a>
+                    <a href="/login" class="btn btn-outline-secondary">Log in</a>
                 </div>
             <?= form_close() ?>
         </div>

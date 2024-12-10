@@ -2,7 +2,7 @@
     <h2 class="text-center">Forgot Password</h2>
     <div class ="row justify-content-center">
         <div class="col-md-4">
-            <?= form_open('accounts/forgot-password') ?>
+            <?= form_open('/forgot-password') ?>
                 <?= csrf_field() ?>
 
                 <div class="mb-3">

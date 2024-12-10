@@ -2,7 +2,7 @@
   <h2 class="text-center">Reset Password</h2>
   <div class ="row justify-content-center">
     <div class="col-md-4">
-      <?= form_open('accounts/reset-password') ?>
+      <?= form_open('/reset-password') ?>
         <?= csrf_field() ?>
         <?= form_hidden('reset-token', $token) ?>
   

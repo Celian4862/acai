@@ -6,7 +6,7 @@
             <?= validation_list_errors() ?>
         </div>
     </div>
-    <?= form_open('forum/newpost', ['class' => 'row']); ?>
+    <?= form_open('/forum/newpost', ['class' => 'row']); ?>
         <?= csrf_field() ?>
         <div class = "col">
             <?= form_input([
