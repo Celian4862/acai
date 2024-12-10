@@ -13,7 +13,7 @@ class Accounts extends BaseController
         }
 
         if (session()->has('logged_in') && session()->get('logged_in') === true) {
-            return redirect()->to('/forum/dashboard');
+            return redirect()->to('/dashboard');
         }
 
         if ($page === 'reset-password') {
@@ -44,7 +44,7 @@ class Accounts extends BaseController
             . view('components/footer');
     }
 
-    public function user_views($page = 'dashboard') {
+    public function user_view($page = 'dashboard') {
         if (!is_file(APPPATH.'/Views/accounts/'.$page.'.php')) {
             throw new PageNotFoundException($page);
         }
@@ -87,7 +87,7 @@ class Accounts extends BaseController
                 ],
             ],
         ])) {
-            return redirect()->to('/accounts/login')->withInput();
+            return redirect()->to('/login')->withInput();
         }
 
         $post = $this->validator->getValidated();
@@ -105,7 +105,7 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return redirect()->to('/forum/dashboard');
+        return redirect()->to('/dashboard');
     }
 
     public function create_account()
@@ -240,7 +240,7 @@ class Accounts extends BaseController
         $email->setTo($post['email']);
 
         $email->setSubject('Password reset request');
-        $email->setMessage('Please click this link to reset your password: ' . site_url('/accounts/reset-password?reset_token=' . $token) . '. Please complete the password reset process within five minutes since your token will become invalid after that time.');
+        $email->setMessage('Please click this link to reset your password: ' . site_url('/reset-password?reset_token=' . $token) . '. Please complete the password reset process within five minutes since your token will become invalid after that time.');
 
         if (! $email->send()) {
             $this->validateData($data, [
@@ -268,7 +268,7 @@ class Accounts extends BaseController
         helper('date');
 
         if ($account === null || $account['token_expiry'] < date('Y-m-d H:i:s', now(app_timezone()))) {
-            return redirect()->to('/accounts/forgot-password');
+            return redirect()->to('/forgot-password');
         }
 
         if (! $this->validateData($data, [
@@ -302,7 +302,7 @@ class Accounts extends BaseController
         ]);
 
         session()->setFlashdata('success', true);
-        return redirect()->to('/accounts/reset-success');
+        return redirect()->to('/reset-success');
     }
 
     public function settings() {

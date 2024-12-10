@@ -7,8 +7,8 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 $routes->group('forum', static function ($routes) {
-    $routes->get('(:segment)', 'Forum::view/$1');
-    $routes->post('newpost', 'Forum::newpost');
+    $routes->get('(:segment)', 'Posts::view/$1');
+    $routes->post('newpost', 'Posts::newpost');
 });
 
 $routes->get('/', 'Home::index');
@@ -21,7 +21,8 @@ $routes->get('reset-password', 'Accounts::view/reset-password');
 $routes->get('reset-success', 'Accounts::view/reset-success');
 $routes->get('logout', 'Accounts::logout');
 $routes->get('dashboard', 'Posts::view');
-$routes->get('(:segment)', 'Accounts::user_views/$1');
+
+$routes->get('(:segment)', 'Accounts::user_view/$1');
 
 $routes->post('login', 'Accounts::login');
 $routes->post('signup', 'Accounts::create_account');
@@ -29,6 +30,7 @@ $routes->post('forgot-password', 'Accounts::forgot_password');
 $routes->post('reset-password', 'Accounts::reset_password');
 
 $routes->group('accounts', static function ($routes) {
-    $routes->get('settings', 'Accounts::settings');
-    $routes->get('delete-account', 'Accounts::delete_account');
+    $routes->get('(:segment)', 'Accounts::user_view/$1');
+    $routes->post('settings', 'Accounts::settings');
+    $routes->post('delete-account', 'Accounts::delete_account');
 });
