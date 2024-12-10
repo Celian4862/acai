@@ -8,12 +8,12 @@
   
         <div class="mb-3">
           <?= form_label('New password', 'password', ['class' => 'form-label']) ?>
-          <?= form_input('password', '', ['id' => 'password', 'class' => 'form-control', 'required' => true], 'password') ?>
+          <?= form_input('password', set_value('password', '', false), ['id' => 'password', 'class' => 'form-control', 'required' => true], 'password') ?>
         </div>
 
         <div class="mb-3">
           <?= form_label('Confirm password', 'confirm-password', ['class' => 'form-label']) ?>
-          <?= form_password('confirm-password', '', ['id' => 'confirm-password', 'class' => 'form-control', 'required' => true]) ?>
+          <?= form_password('confirm-password', set_value('confirm-password', '', false), ['id' => 'confirm-password', 'class' => 'form-control', 'required' => true]) ?>
   
           <div class="text-danger">
             <?= validation_list_errors() ?>
