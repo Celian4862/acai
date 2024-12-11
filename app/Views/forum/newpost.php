@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <h2>Add new post</h2>
+    <h2 class="mb-3">Add new post</h2>
     <div class="row justify-content-center">
         <?php helper('form'); ?>
         <div class="text-danger">
