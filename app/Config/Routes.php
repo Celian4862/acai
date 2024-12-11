@@ -10,10 +10,12 @@ $routes->get('dashboard', 'Posts::dashboard');
 $routes->group('forum', static function ($routes) {
     $routes->get('/', 'Posts::view');
     $routes->get('(:segment)', 'Posts::view/$1');
-    $routes->get('posts/(:segment)', 'Posts::view_post/$1');
     $routes->post('newpost', 'Posts::newpost');
+    
+    $routes->get('posts/(:segment)', 'Posts::view_post/$1');
     $routes->post('posts/(:segment)', 'Posts::edit_post/$1');
     $routes->post('posts/(:segment)/delete', 'Posts::delete_post/$1');
+
     $routes->post('comment/(:segment)', 'Comments::add_comment/$1');
 });
 
