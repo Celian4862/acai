@@ -9,6 +9,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('dashboard', 'Posts::view');
 $routes->group('forum', static function ($routes) {
     $routes->get('(:segment)', 'Posts::view/$1');
+    $routes->get('posts/(:segment)', 'Posts::view_post/$1');
     $routes->post('newpost', 'Posts::newpost');
 });
 
