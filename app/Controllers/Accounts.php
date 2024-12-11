@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AccountsModel;
+use App\Models\PostsModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Accounts extends BaseController
@@ -413,16 +414,24 @@ class Accounts extends BaseController
     }
 
     /**
-     * Deletes account
+     * Delete account and reassign all posts to the ghost account.
      * @return \CodeIgniter\HTTP\RedirectResponse
      */
     public function delete_account() {
         helper('form');
 
-        $model = model(AccountsModel::class);
-        $user_id = $model->getAccount(session()->get('username'))['id'];
+        $accounts_model = model(AccountsModel::class);
+        $user_id = $accounts_model->getAccount(session()->get('username'))['id'];
 
-        if ($model->delete($user_id)) {
+        // Find all posts associated with this user and reassign the posts to ID number 1, the ghost account.
+
+        $posts_model = model(PostsModel::class);
+
+        $posts_model->reassignPosts($user_id);
+
+        // Delete account
+
+        if ($accounts_model->delete($user_id)) {
             session()->destroy();
             return redirect()->to('/');
         } else {
