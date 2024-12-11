@@ -5,12 +5,9 @@
     <div class="d-inline-flex">
         <ul class="p-0 m-0">
             <li class="d-inline-block mx-4"><a href="/about-us">About Us</a></li>
+            <li class="d-inline-block mx-4"><a href="/forum">Forum</a></li>
             <?php if (session()->has('logged_in') && session()->get('logged_in') === true) : ?>
                 <li class="d-inline-block mx-4"><a href="/dashboard">Dashboard</a></li>
-            <?php endif ?>
-        </ul>
-        <ul class="p-0 m-0">
-            <?php if (session()->has('logged_in') && session()->get('logged_in') === true) : ?>
                 <li class="d-inline-block mx-4"><a href="/accounts/settings">Settings</a></li>
                 <li class="d-inline-block mx-4"><a href="/forum/newpost">+ Add New Post</a></li>
                 <li class="d-inline-block mx-4"><a href="/logout">Log out</a></li>
