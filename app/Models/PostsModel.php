@@ -46,7 +46,7 @@ class PostsModel extends Model
 
     public function getPosts($slug = false)
     {
-        if ($slug === false) {
+        if (!$slug) {
             return $this->findAll();
         }
 
