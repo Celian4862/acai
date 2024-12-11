@@ -5,11 +5,28 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\AccountsModel;
 use App\Models\PostsModel;
+use App\Models\CommentsModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Posts extends BaseController
 {
-    public function view($page = 'dashboard') {
+    public function dashboard() {
+        if (session()->has('logged_in') && session()->get('logged_in') === true) {
+            $model = model(PostsModel::class);
+            $posts = $model->getUsersPosts(model(AccountsModel::class)->getAccount(session()->get('username'))['id']); // Get only posts made by the current user
+            $data = session()->get();
+            $data['posts'] = $posts;
+
+            return view('components/header', ['title' => 'Dashboard'])
+                . view('components/nav')
+                . view('forum/dashboard', $data)
+                . view('components/footer');
+        }
+
+        return redirect('Accounts::view');
+    }
+
+    public function view($page = 'index') {
         if (!is_file(APPPATH.'/Views/forum/'.$page.'.php')) {
             throw new PageNotFoundException($page);
         }
@@ -34,14 +51,16 @@ class Posts extends BaseController
             return redirect()->to('/dashboard');
         }
         $post = model(PostsModel::class)->getPosts($slug);
+        $comments = model(CommentsModel::class)->getComments($post['id']);
 
         if (empty($post)) {
             throw new PageNotFoundException("Cannot find the post: {$slug}");
         }
 
+        helper('form');
         return view('components/header', ['title' => $post['title']])
             . view('components/nav')
-            . view('forum/post', ['post' => $post])
+            . view('forum/post', ['post' => $post, 'comments' => $comments, 'op_name' => model(AccountsModel::class)->getAccountById($post['account_id'])['username']])
             . view('components/footer');
     }
 
@@ -87,13 +106,19 @@ class Posts extends BaseController
 
         $model = model(PostsModel::class);
         
+        helper('date');
         $model->save([
             'title' => $post['title'],
             'body' => $post['body'],
             'slug' => url_title(strtolower($post['title'])),
             'account_id' => model(AccountsModel::class)->getAccount(session()->get('username'))['id'],
+            'updated_at' => date('Y-m-d H:i:s', now(app_timezone())),
         ]);
 
         return redirect()->to('/dashboard');
+    }
+
+    public function edit_post() {
+
     }
 }
