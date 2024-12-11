@@ -184,7 +184,7 @@ class Accounts extends BaseController
 
         session()->set($account_data);
 
-        return redirect()->to('/forum/dashboard');
+        return redirect()->to('/dashboard');
     }
 
     public function forgot_password() {
