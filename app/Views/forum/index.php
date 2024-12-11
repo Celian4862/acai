@@ -16,8 +16,7 @@
                         <p class="card-text"><?= esc($post['body']) ?></p>
                     </div>
                     <div class="card-footer">
-                        <!-- This doesn't work yet. -->
-                        <a href="/forum/posts/<?= esc($post['slug'], 'url') ?>" class="btn btn-primary">View Post</a>
+                        <a href="/forum/posts/<?= esc($post['id'], 'url') ?>" class="btn btn-primary">View Post</a>
                     </div>
                 </div>
             <?php endforeach ?>
