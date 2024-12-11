@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <h2 class="text-center">Dashboard</h2>
+    <h2 class="text-center">Your Posts</h2>
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card mt-3 text-center">
