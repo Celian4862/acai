@@ -15,7 +15,7 @@
             </div>
 
             <h3 class="mb-3">Add Comment</h3>
-            <?= form_open_multipart('/forum/post/' . esc($post['slug'])) ?>
+            <?= form_open('/forum/post/' . esc($post['slug'])) ?>
                 <div class="form-group mb-3">
                     <?= form_textarea('comment', set_value('comment', '', false), ['class' => 'form-control', 'rows' => 3, 'required' => true, 'placeholder' => 'Add your thoughts...']) ?>
                 </div>
