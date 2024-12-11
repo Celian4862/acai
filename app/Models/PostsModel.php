@@ -12,7 +12,7 @@ class PostsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['title', 'slug', 'body', 'account_id', 'updated_at'];
+    protected $allowedFields    = ['title', 'body', 'account_id', 'updated_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,14 +44,14 @@ class PostsModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getPosts($slug = false)
+    public function getPosts($post_id = false)
     {
-        if (!$slug) {
+        if (!$post_id) {
             return $this->findAll();
         }
 
         return $this->asArray()
-            ->where(['slug' => $slug])
+            ->where(['id' => $post_id])
             ->first();
     }
 
