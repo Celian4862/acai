@@ -50,4 +50,10 @@ class AccountsModel extends Model
             ->orWhere('email', $name_email)
             ->first();
     }
+
+    public function getAccountById($id)
+    {
+        return $this->where('id', $id)
+            ->first();
+    }
 }
