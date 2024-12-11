@@ -46,21 +46,22 @@ class Posts extends BaseController
         return redirect('Accounts::view');
     }
 
-    public function view_post($slug = false) {
-        if (!$slug) {
-            return redirect()->to('/dashboard');
-        }
-        $post = model(PostsModel::class)->getPosts($slug);
+    public function view_post($post_id) {
+        $post = model(PostsModel::class)->getPosts($post_id);
         $comments = model(CommentsModel::class)->getComments($post['id']);
+        $accounts_model = model(AccountsModel::class);
+        foreach ($comments as &$comment) { // Inserts a username key into the every sub-array in $comments
+            $comment['username'] = $accounts_model->getAccountById($comment['account_id'])['username'];
+        }
 
         if (empty($post)) {
-            throw new PageNotFoundException("Cannot find the post: {$slug}");
+            throw new PageNotFoundException("Cannot find post {$post_id}");
         }
 
         helper('form');
         return view('components/header', ['title' => $post['title']])
             . view('components/nav')
-            . view('forum/post', ['post' => $post, 'comments' => $comments, 'op_name' => model(AccountsModel::class)->getAccountById($post['account_id'])['username']])
+            . view('forum/post', ['post' => $post, 'comments' => $comments, 'op_name' => $accounts_model->getAccountById($post['account_id'])['username']])
             . view('components/footer');
     }
 
@@ -109,7 +110,6 @@ class Posts extends BaseController
         $model->save([
             'title' => $post['title'],
             'body' => $post['body'],
-            'slug' => url_title(strtolower($post['title'])),
             'account_id' => model(AccountsModel::class)->getAccount(session()->get('username'))['id'],
             'updated_at' => date('Y-m-d H:i:s', now(app_timezone())),
         ]);
