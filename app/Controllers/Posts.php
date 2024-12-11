@@ -65,7 +65,7 @@ class Posts extends BaseController
     }
 
     public function newpost() {
-        helper(['form', 'url']);
+        helper(['form', 'url', 'date']);
 
         $data = $this->request->getPost(['title', 'body']);
 
@@ -105,8 +105,7 @@ class Posts extends BaseController
         $post = $this->validator->getValidated();
 
         $model = model(PostsModel::class);
-        
-        helper('date');
+
         $model->save([
             'title' => $post['title'],
             'body' => $post['body'],
