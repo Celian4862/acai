@@ -15,7 +15,11 @@
             </div>
 
             <h3 class="mb-3">Add Comment</h3>
-            <?= form_open('/forum/posts/' . esc($post['slug'])) ?>
+            <div class="text-danger">
+                <?= validation_list_errors() ?>
+            </div>
+            <?= form_open('/forum/comment/' . esc($post['id'])) ?>
+                <?= csrf_field() ?>
                 <div class="form-group mb-3">
                     <?= form_textarea('comment', set_value('comment', '', false), ['class' => 'form-control', 'rows' => 3, 'required' => true, 'placeholder' => 'Add your thoughts...']) ?>
                 </div>
@@ -28,7 +32,12 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <p class="card-text"><?=esc($comment['comment']) ?></p>
-                            <p class="card-text text-muted">Posted by: <?= esc($comment['username']); ?></p>
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <span class="card-text text-muted">Posted by: <?= esc($comment['username']); ?></span>
+                                    <span class="card-text text-muted">Last updated on: <?= esc($comment['updated_at']) ?></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
