@@ -29,6 +29,22 @@ class Posts extends BaseController
         return redirect('Accounts::view');
     }
 
+    public function view_post($slug = false) {
+        if (!$slug) {
+            return redirect()->to('/dashboard');
+        }
+        $post = model(PostsModel::class)->getPosts($slug);
+
+        if (empty($post)) {
+            throw new PageNotFoundException("Cannot find the post: {$slug}");
+        }
+
+        return view('components/header', ['title' => $post['title']])
+            . view('components/nav')
+            . view('forum/post', ['post' => $post])
+            . view('components/footer');
+    }
+
     public function newpost() {
         helper(['form', 'url']);
 
