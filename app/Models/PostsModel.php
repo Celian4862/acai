@@ -12,7 +12,7 @@ class PostsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['title', 'slug', 'body', 'account_id'];
+    protected $allowedFields    = ['title', 'slug', 'body', 'account_id', 'updated_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -53,6 +53,12 @@ class PostsModel extends Model
         return $this->asArray()
             ->where(['slug' => $slug])
             ->first();
+    }
+
+    public function getUsersPosts($userId)
+    {
+        return $this->where('account_id', $userId)
+            ->findAll();
     }
 
     public function reassignPosts($userId) {
