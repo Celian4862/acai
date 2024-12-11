@@ -15,7 +15,8 @@ class AddPosts1 extends Migration
                 'unsigned' => true,
             ],
         ]);
-        $this->forge->addForeignKey('account_id', 'accounts', 'id', 'CASCADE');
+        $this->forge->addForeignKey('account_id', 'accounts', 'id', 'CASCADE', '', 'fk_account');
+        $this->forge->processIndexes('posts');
         $this->db->enableForeignKeyChecks();
     }
 
