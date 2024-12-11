@@ -53,7 +53,7 @@ class Accounts extends BaseController
         if (session()->has('logged_in') && session()->get('logged_in') === true) {
             return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
                 . view('components/nav')
-                . view('accounts/' . $page, session()->get())
+                . view('accounts/' . $page)
                 . view('components/footer');
         }
 
