@@ -54,4 +54,8 @@ class PostsModel extends Model
             ->where(['slug' => $slug])
             ->first();
     }
+
+    public function reassignPosts($userId) {
+        $this->db->query("UPDATE posts SET account_id = 1 WHERE account_id = {$userId};");
+    }
 }
