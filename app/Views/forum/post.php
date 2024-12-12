@@ -14,17 +14,21 @@
                 </div>
             </div>
 
-            <h3 class="mb-3">Add Comment</h3>
-            <div class="text-danger">
-                <?= validation_list_errors() ?>
-            </div>
-            <?= form_open('/forum/comment/' . esc($post['id'])) ?>
-                <?= csrf_field() ?>
-                <div class="form-group mb-3">
-                    <?= form_textarea('comment', set_value('comment', '', false), ['class' => 'form-control', 'rows' => 3, 'required' => true, 'placeholder' => 'Add your thoughts...']) ?>
+            <?php if (session()->has('logged_in') && session()->get('logged_in') === true): ?>
+                <h3 class="mb-3">Add Comment</h3>
+                <div class="text-danger">
+                    <?= validation_list_errors() ?>
                 </div>
-                <?= form_submit('submit', 'Submit', ['class' => 'btn btn-primary mb-3']) ?>
-            <?= form_close() ?>
+                <?= form_open('/forum/comment/' . esc($post['id'])) ?>
+                    <?= csrf_field() ?>
+                    <div class="form-group mb-3">
+                        <?= form_textarea('comment', set_value('comment', '', false), ['class' => 'form-control', 'rows' => 3, 'required' => true, 'placeholder' => 'Add your thoughts...']) ?>
+                    </div>
+                    <?= form_submit('submit', 'Submit', ['class' => 'btn btn-primary mb-3']) ?>
+                <?= form_close() ?>
+            <?php else: ?>
+                <p class=""><a href="<?= site_url('login') ?>">Login</a> to add a comment.</p>
+            <?php endif ?>
 
             <h3 class="mb-3">Comments</h3>
             <?php if (! empty($comments) && is_array($comments)) : ?>

@@ -10,6 +10,18 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Posts extends BaseController
 {
+    public function index() {
+        $model = model(PostsModel::class);
+        $posts = $model->getPosts();
+        $data = session()->get();
+        $data['posts'] = $posts;
+
+        return view('components/header', ['title' => 'Forum'])
+            . view('components/nav')
+            . view('forum/index', $data)
+            . view('components/footer');
+    }
+
     public function dashboard() {
         if (session()->has('logged_in') && session()->get('logged_in') === true) {
             $model = model(PostsModel::class);
@@ -26,7 +38,7 @@ class Posts extends BaseController
         return redirect('Accounts::view');
     }
 
-    public function view($page = 'index') {
+    public function view($page) {
         if (!is_file(APPPATH.'/Views/forum/'.$page.'.php')) {
             throw new PageNotFoundException($page);
         }

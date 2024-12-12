@@ -2,11 +2,15 @@
     <h2 class="text-center">Forum</h2>
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card mt-3 text-center">
-                <div class="card-body">
-                    <a href="/forum/newpost" class="btn btn-primary">+ Add new post</a>
+            <?php if (session()->has('logged_in') && session()->get('logged_in') === true): ?>
+                <div class="card mt-3 text-center">
+                    <div class="card-body">
+                        <a href="/forum/newpost" class="btn btn-primary">+ Add new post</a>
+                    </div>
                 </div>
-            </div>
+            <?php else: ?>
+                <p class="text-center mt-3"><a href="/login">Login</a> to add a new post.</p>
+            <?php endif ?>
             <?php foreach ($posts as $post): ?>
                 <div class="card mt-3">
                     <div class="card-header">
