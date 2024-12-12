@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-1"></div>
-        <h4 class="col"><a href="<?= site_url('/forum') ?>" class="text-decoration-none text-black">< Back</a></h>
+        <h4 class="col"><a href="/forum" class="text-decoration-none text-black">< Back</a></h>
     </div>
     <div class="row justify-content-center">
         <h2 class="col-md p-0 inline-block mb-3 text-center"><?= esc($post['title']) ?></h2>
