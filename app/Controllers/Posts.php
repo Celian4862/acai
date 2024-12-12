@@ -196,7 +196,7 @@ class Posts extends BaseController
             $file->move(ROOTPATH . 'public/images/user_imgs', $newName);
         }
 
-        return redirect()->to('/dashboard');
+        return redirect()->to("/forum/posts/{$new_post_id}");
     }
 
     public function edit_post() {
