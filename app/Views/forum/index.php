@@ -20,7 +20,10 @@
                         <p class="card-text"><?= esc($post['body']) ?></p>
                     </div>
                     <div class="card-footer">
-                        <a href="/forum/posts/<?= esc($post['id'], 'url') ?>" class="btn btn-primary">View Post</a>
+                        <a href="/forum/posts/<?= esc($post['id'], 'url') ?>" class="btn btn-primary me-2">View Post</a>
+                        <?php if ($post['account_id'] === $id): ?>
+                            <a href="/forum/posts/edit/<?= esc($post['id'], 'url') ?>" class="btn btn-warning">Edit</a>
+                        <?php endif ?>
                     </div>
                 </div>
             <?php endforeach ?>

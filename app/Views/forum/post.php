@@ -20,6 +20,9 @@
                             <span class="card-text text-muted">Last updated <?= esc($post['updated_at']) ?></span>
                         </div>
                     </div>
+                    <?php if ($post['account_id'] === $id): ?>
+                        <a href="/forum/posts/edit/<?= esc($post['id'], 'url') ?>" class="btn btn-warning">Edit</a>
+                    <?php endif ?>
                 </div>
             </div>
 

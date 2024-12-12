@@ -13,8 +13,9 @@ $routes->group('forum', static function ($routes) {
     $routes->post('newpost', 'Posts::newpost');
     
     $routes->get('posts/(:segment)', 'Posts::view_post/$1');
-    $routes->post('posts/(:segment)', 'Posts::edit_post/$1');
-    $routes->post('posts/(:segment)/delete', 'Posts::delete_post/$1');
+    $routes->get('posts/edit/(:segment)', 'Posts::edit/$1');
+    $routes->post('posts/edit/(:segment)', 'Posts::edit_post/$1');
+    $routes->post('posts/delete/(:segment)', 'Posts::delete_post/$1');
 
     $routes->post('comment/(:segment)', 'Comments::add_comment/$1');
 });
