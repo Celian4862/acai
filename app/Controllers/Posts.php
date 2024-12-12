@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\AccountsModel;
 use App\Models\PostsModel;
 use App\Models\CommentsModel;
+use App\Models\ImagesModel;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
@@ -61,6 +62,11 @@ class Posts extends BaseController
 
     public function view_post($post_id) {
         $post = model(PostsModel::class)->getPosts($post_id);
+
+        if (empty($post)) {
+            throw new PageNotFoundException("Cannot find post {$post_id}");
+        }
+
         $time = new Time($post['updated_at']);
         $time = $time->difference(Time::now());
         if (($diff = $time->getSeconds()) < 60) {
@@ -103,9 +109,7 @@ class Posts extends BaseController
             }
         }
 
-        if (empty($post)) {
-            throw new PageNotFoundException("Cannot find post {$post_id}");
-        }
+        $images = model(ImagesModel::class)->getImages($post_id);
 
         helper('form');
         return view('components/header', ['title' => $post['title']])
@@ -148,9 +152,7 @@ class Posts extends BaseController
         if ($files) {
             foreach ($files['images'] as $file) {
                 if ($file->isValid() && ! $file->hasMoved()) {
-                    if (in_array($file->getMimeType(), $allowedTypes)) {
-                        $file->move(WRITEPATH . 'uploads');
-                    } else {
+                    if (! in_array($file->getMimeType(), $allowedTypes)) {
                         $this->validateData([], [
                             'default' => [
                                 'rules' => 'required',
@@ -167,14 +169,29 @@ class Posts extends BaseController
 
         $post = $this->validator->getValidated();
 
-        $model = model(PostsModel::class);
+        $posts_model = model(PostsModel::class);
+        $images_model = model(ImagesModel::class);
 
-        $model->save([
+        $posts_model->save([
             'title' => $post['title'],
             'body' => $post['body'],
             'account_id' => model(AccountsModel::class)->getAccount(session()->get('username'))['id'],
             'updated_at' => date('Y-m-d H:i:s', now(app_timezone())),
         ]);
+
+        $image_num = 0;
+        foreach ($files['images'] as $file) {
+            $images_model->save([
+                'post_id' => $posts_model->insertID(),
+                'image' => $file->getClientName(),
+            ]);
+            $newName = $images_model->insertID() . '_' . $image_num++ . '.' . $file->getExtension();
+            $file->move(WRITEPATH . 'uploads', $newName);
+            $images_model->save([
+                'id' => $images_model->insertID(),
+                'image' => $newName,
+            ]);
+        }
 
         return redirect()->to('/dashboard');
     }
