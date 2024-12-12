@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <?php if (session()->has('logged_in') && session()->get('logged_in') === true): ?>
-                <div class="card mt-3 text-center">
+                <div class="mt-3 text-center">
                     <div class="card-body">
                         <a href="/forum/newpost" class="btn btn-primary">+ Add new post</a>
                     </div>

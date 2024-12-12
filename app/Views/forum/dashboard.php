@@ -2,7 +2,7 @@
     <h2 class="text-center">Your Posts</h2>
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card mt-3 text-center">
+            <div class="mt-3 text-center">
                 <div class="card-body">
                     <a href="/forum/newpost" class="btn btn-primary">+ Add new post</a>
                 </div>
