@@ -1,5 +1,11 @@
 <div class="container mt-5">
-    <h2 class="mb-3 text-center"><?= esc($post['title']) ?></h2>
+    <div class="row justify-content-center">
+        <div class="col-1"></div>
+        <h4 class="col"><a href="<?= site_url('/forum') ?>" class="text-decoration-none text-black">< Back</a></h>
+    </div>
+    <div class="row justify-content-center">
+        <h2 class="col-md p-0 inline-block mb-3 text-center"><?= esc($post['title']) ?></h2>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card mb-3">
@@ -46,7 +52,7 @@
                     </div>
                 <?php endforeach; ?>
             <?php else : ?>
-                <p>No comments found.</p>
+          <p>No comments found.</p>
             <?php endif ?>
         </div>
     </div>

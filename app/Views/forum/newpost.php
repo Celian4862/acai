@@ -1,5 +1,10 @@
 <div class="container mt-5">
-    <h2 class="mb-3">Add new post</h2>
+    <div class="row justify-content-center">
+        <h4 class="col"><a href="<?= site_url('/dashboard') ?>" class="text-decoration-none text-black">< Back</a></h>
+    </div>
+    <div class="row justify-content-center">
+        <h2 class="mb-3">Add new post</h2>
+    </div>
     <div class="row justify-content-center">
         <?php helper('form'); ?>
         <div class="text-danger">
