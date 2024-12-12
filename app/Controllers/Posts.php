@@ -2,13 +2,14 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Controllers\BaseController;
 use App\Models\AccountsModel;
 use App\Models\PostsModel;
 use App\Models\CommentsModel;
 use App\Models\ImagesModel;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Files\FileCollection;
 
 class Posts extends BaseController
 {
@@ -109,12 +110,17 @@ class Posts extends BaseController
             }
         }
 
-        $images = model(ImagesModel::class)->getImages($post_id);
+        $image_refs = model(ImagesModel::class)->getImages($post_id);
+        $images = [];
+
+        foreach ($image_refs as $image) {
+            $images[] = $image['image'];
+        }
 
         helper('form');
         return view('components/header', ['title' => $post['title']])
             . view('components/nav')
-            . view('forum/post', ['post' => $post, 'comments' => $comments, 'op_name' => $accounts_model->getAccountById($post['account_id'])['username']])
+            . view('forum/post', ['post' => $post, 'comments' => $comments, 'images' => $images, 'op_name' => $accounts_model->getAccountById($post['account_id'])['username']])
             . view('components/footer');
     }
 
@@ -181,16 +187,12 @@ class Posts extends BaseController
 
         $image_num = 0;
         foreach ($files['images'] as $file) {
+            $newName = $file->getRandomName();
             $images_model->save([
                 'post_id' => $posts_model->insertID(),
-                'image' => $file->getClientName(),
-            ]);
-            $newName = $images_model->insertID() . '_' . $image_num++ . '.' . $file->getExtension();
-            $file->move(WRITEPATH . 'uploads', $newName);
-            $images_model->save([
-                'id' => $images_model->insertID(),
                 'image' => $newName,
             ]);
+            $file->move(ROOTPATH . 'public/images', $newName);
         }
 
         return redirect()->to('/dashboard');

@@ -11,6 +11,9 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <p class="card-text"><?= esc($post['body']) ?></p>
+                    <?php foreach ($images as $image): ?>
+                        <img src="/images/user_imgs/<?= esc($image) ?>" class="img-fluid" alt="Responsive image">
+                    <?php endforeach; ?>
                     <div>
                         <div class="d-flex justify-content-between">
                             <span class="card-text text-muted">Posted by: <?= esc($op_name) ?></span>
