@@ -21,8 +21,9 @@ class Posts extends BaseController
         $model = model(PostsModel::class);
         $posts = $model->getPosts();
         $data['posts'] = $posts;
-        $data['id'] = model(AccountsModel::class)->getAccount(session()->get('username'))['id'];
+        $data['id'] = model(AccountsModel::class)->getAccount(session()->get('username'))['id'] ?? null;
 
+        helper('form');
         return view('components/header', ['title' => 'Forum'])
             . view('components/nav')
             . view('forum/index', $data)
@@ -36,6 +37,7 @@ class Posts extends BaseController
             $data = session()->get();
             $data['posts'] = $posts;
 
+            helper('form');
             return view('components/header', ['title' => 'Dashboard'])
                 . view('components/nav')
                 . view('forum/dashboard', $data)
@@ -46,6 +48,14 @@ class Posts extends BaseController
     }
 
     public function view($page) {
+        if ($page === 'index') {
+            return redirect()->to('/forum');
+        }
+
+        if ($page === 'dashboard') {
+            return redirect()->to('/dashboard');
+        }
+
         if (!is_file(APPPATH.'/Views/forum/'.$page.'.php')) {
             throw new PageNotFoundException($page);
         }
@@ -56,7 +66,7 @@ class Posts extends BaseController
 
             return view('components/header', ['title' => ucwords(str_replace('-', ' ', $page))])
                 . view('components/nav')
-                . view('forum/' . $page, $posts)
+                . view('forum/' . $page, ['posts' => $posts])
                 . view('components/footer');
         }
 
@@ -133,7 +143,7 @@ class Posts extends BaseController
                 'comments' => $comments,
                 'images' => $images,
                 'op_name' => $accounts_model->getAccountById($post['account_id'])['username'],
-                'id' => $accounts_model->getAccount(session()->get('username'))['id'],
+                'id' => $accounts_model->getAccount(session()->get('username'))['id'] ?? null,
             ])
             . view('components/footer');
     }
@@ -213,6 +223,12 @@ class Posts extends BaseController
         return redirect()->to("/forum/posts/{$new_post_id}");
     }
 
+    /**
+     * Renders the view for the edit-post page
+     * @param mixed $post_id
+     * @throws \CodeIgniter\Exceptions\PageNotFoundException
+     * @return string|\CodeIgniter\HTTP\RedirectResponse
+     */
     public function edit($post_id) {
         if (!session()->has('logged_in') || session()->get('logged_in') !== true) {
             return redirect()->to('/login');
@@ -279,5 +295,31 @@ class Posts extends BaseController
         ]);
 
         return redirect()->to("/forum/posts/{$post_id}");
+    }
+
+    public function delete_post($post_id) {
+        $comments_model = model(CommentsModel::class);
+        $images_model = model(ImagesModel::class);
+        $posts_model = model(PostsModel::class);
+
+        $comments = $comments_model->getComments($post_id);
+        $images = $images_model->getImages($post_id);
+        $post = $posts_model->getPosts($post_id);
+
+        helper('filesystem');
+        foreach ($images as $image) {
+            $file = new \CodeIgniter\Files\File(ROOTPATH . 'public/images/user_imgs/' . $image['image']);
+            $file->move(ROOTPATH . 'public/images/user_imgs/to-delete');
+            $images_model->delete($image['id']);
+        }
+        delete_files(ROOTPATH . 'public/images/user_imgs/to-delete');
+
+        foreach ($comments as $comment) {
+            $comments_model->delete($comment['id']);
+        }
+
+        $posts_model->delete($post_id);
+
+        return redirect()->to('/dashboard');
     }
 }

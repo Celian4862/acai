@@ -2,7 +2,7 @@
     <h2 class="text-center">Forum</h2>
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <?php if (session()->has('logged_in') && session()->get('logged_in') === true): ?>
+            <?php if (session()->get('logged_in') === true): ?>
                 <div class="mt-3 text-center">
                     <div class="card-body">
                         <a href="/forum/newpost" class="btn btn-primary">+ Add new post</a>
@@ -19,10 +19,14 @@
                     <div class="card-body">
                         <p class="card-text"><?= esc($post['body']) ?></p>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer d-flex">
                         <a href="/forum/posts/<?= esc($post['id'], 'url') ?>" class="btn btn-primary me-2">View Post</a>
-                        <?php if ($post['account_id'] === $id): ?>
-                            <a href="/forum/posts/edit/<?= esc($post['id'], 'url') ?>" class="btn btn-warning">Edit</a>
+                        <?php if (session()->get('logged_in') === true && $post['account_id'] === $id): ?>
+                            <a href="/forum/posts/edit/<?= esc($post['id'], 'url') ?>" class="btn btn-warning me-2">Edit</a>
+                            <?= form_open("/forum/posts/delete/{$post['id']}") ?>
+                                <?= csrf_field() ?>
+                                <?= form_submit('submit', 'Delete', ['class' => 'btn btn-danger']) ?>
+                            <?= form_close() ?>
                         <?php endif ?>
                     </div>
                 </div>

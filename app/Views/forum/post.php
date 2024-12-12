@@ -21,7 +21,13 @@
                         </div>
                     </div>
                     <?php if ($post['account_id'] === $id): ?>
-                        <a href="/forum/posts/edit/<?= esc($post['id'], 'url') ?>" class="btn btn-warning">Edit</a>
+                        <div class="d-flex">
+                            <a href="/forum/posts/edit/<?= esc($post['id'], 'url') ?>" class="btn btn-warning me-2">Edit</a>
+                            <?= form_open("/forum/posts/delete/{$post['id']}") ?>
+                                <?= csrf_field() ?>
+                                <?= form_submit('submit', 'Delete', ['class' => 'btn btn-danger']) ?>
+                            <?= form_close() ?>
+                        </div>
                     <?php endif ?>
                 </div>
             </div>
