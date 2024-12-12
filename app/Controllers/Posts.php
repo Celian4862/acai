@@ -106,11 +106,24 @@ class Posts extends BaseController
         }
 
         $files = $this->request->getFiles();
+        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
         if ($files) {
             foreach ($files['images'] as $file) {
                 if ($file->isValid() && ! $file->hasMoved()) {
-                    $file->move(WRITEPATH . 'uploads');
+                    if (in_array($file->getMimeType(), $allowedTypes)) {
+                        $file->move(WRITEPATH . 'uploads');
+                    } else {
+                        $this->validateData([], [
+                            'default' => [
+                                'rules' => 'required',
+                                'errors' => [
+                                    'required' => 'Invalid file type: ' . $file->getClientName(),
+                                ]
+                            ]
+                        ]);
+                        return redirect()->back()->withInput();
+                    }
                 }
             }
         }

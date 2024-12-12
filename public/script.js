@@ -14,7 +14,7 @@ function addFile() {
     newDiv.id = `image${pageNum}`;
     newDiv.className = 'mb-3';
     newDiv.innerHTML = `
-        <input type="file" class="form-control">
+        <input type="file" name="images[]" class="form-control" accept=".jpg, .jpeg, .png">
         <button type="button" class="btn btn-secondary mt-2" onclick="removeFile('image${pageNum}')">Remove Image</button>
     `;
     document.getElementById('add-file').before(newDiv);
