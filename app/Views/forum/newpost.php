@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <h4 class="col"><a href="/dashboard" class="text-decoration-none text-black">< Back</a></h>
+        <h4 class="col"><a href="<?= (session()->get('_ci_previous_url') === site_url('/dashboard')) ? '/dashboard' : '/forum' ?>" class="text-decoration-none text-black">< Back</a></h>
     </div>
     <div class="row justify-content-center">
         <h2 class="mb-3">Add new post</h2>
