@@ -59,6 +59,15 @@
                                     <span class="card-text text-muted">Posted by: <?= esc($comment['username']); ?></span>
                                     <span class="card-text text-muted">Last updated <?= esc($comment['updated_at']) ?></span>
                                 </div>
+                                <?php if ($comment['account_id'] === $id): ?>
+                                    <div class="d-flex">
+                                        <a href="/forum/comment/edit/<?= esc($comment['id'], 'url') ?>" class="btn btn-warning me-2">Edit</a>
+                                        <?= form_open("/forum/comment/delete/{$comment['id']}") ?>
+                                            <?= csrf_field() ?>
+                                            <?= form_submit('submit', 'Delete', ['class' => 'btn btn-danger']) ?>
+                                        <?= form_close() ?>
+                                    </div>
+                                <?php endif ?>
                             </div>
                         </div>
                     </div>

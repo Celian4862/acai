@@ -17,7 +17,10 @@ $routes->group('forum', static function ($routes) {
     $routes->post('posts/edit/(:segment)', 'Posts::edit_post/$1');
     $routes->post('posts/delete/(:segment)', 'Posts::delete_post/$1');
 
+    $routes->get('comment/edit/(:segment)', 'Comments::edit/$1');
     $routes->post('comment/(:segment)', 'Comments::add_comment/$1');
+    $routes->post('comment/edit/(:segment)', 'Comments::edit_comment/$1');
+    $routes->Post('comment/delete/(:segment)', 'Comments::delete_comment/$1');
 });
 
 $routes->get('/', 'Home::index');
