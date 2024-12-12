@@ -34,7 +34,7 @@ function addFile() {
             </div>
         </div>
     `;
-    document.getElementById('add-file').after(newDiv);
+    document.getElementById('add-file-mark').before(newDiv);
 }
 
 function removeFile(elementId) {

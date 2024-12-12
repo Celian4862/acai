@@ -25,6 +25,8 @@
                 <button type="button" class="btn btn-primary" onclick="addFile()">Add Image</button>
             </div>
 
+            <div id="add-file-mark" class="d-none"></div>
+
             <div class="mb-3">
                 <?= form_submit('submit', 'Add Post', ['class' => 'btn btn-primary mt-2']); ?>
             </div>
