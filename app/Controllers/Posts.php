@@ -185,14 +185,15 @@ class Posts extends BaseController
             'updated_at' => date('Y-m-d H:i:s', now(app_timezone())),
         ]);
 
-        $image_num = 0;
+        $new_post_id = $posts_model->insertID(); // To keep constant
+
         foreach ($files['images'] as $file) {
             $newName = $file->getRandomName();
             $images_model->save([
-                'post_id' => $posts_model->insertID(),
+                'post_id' => $new_post_id,
                 'image' => $newName,
             ]);
-            $file->move(ROOTPATH . 'public/images', $newName);
+            $file->move(ROOTPATH . 'public/images/user_imgs', $newName);
         }
 
         return redirect()->to('/dashboard');
