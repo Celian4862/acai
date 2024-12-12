@@ -65,6 +65,8 @@ writable/debugbar/*
 
 php_errors.log
 
+public/images/user_imgs
+
 #-------------------------
 # User Guide Temp Files
 #-------------------------
