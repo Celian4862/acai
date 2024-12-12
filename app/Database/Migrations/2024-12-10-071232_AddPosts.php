@@ -25,8 +25,13 @@ class AddPosts extends Migration
             'body' => [
                 'type' => 'TEXT',
             ],
+            'account_id' => [
+                'type' => 'INT',
+                'unsigned' => true,
+            ],
         ]);
-        $this->forge->addKey('id', true);
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addForeignKey('account_id', 'accounts', 'id', 'CASCADE', '', 'posts_account_fk');
         $this->forge->createTable('posts');
     }
 
