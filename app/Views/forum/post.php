@@ -14,7 +14,7 @@
                     <div>
                         <div class="d-flex justify-content-between">
                             <span class="card-text text-muted">Posted by: <?= esc($op_name) ?></span>
-                            <span class="card-text text-muted">Last updated on: <?= esc($post['updated_at']) ?></span>
+                            <span class="card-text text-muted">Last updated <?= esc($post['updated_at']) ?></span>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                             <div>
                                 <div class="d-flex justify-content-between">
                                     <span class="card-text text-muted">Posted by: <?= esc($comment['username']); ?></span>
-                                    <span class="card-text text-muted">Last updated on: <?= esc($comment['updated_at']) ?></span>
+                                    <span class="card-text text-muted">Last updated <?= esc($comment['updated_at']) ?></span>
                                 </div>
                             </div>
                         </div>

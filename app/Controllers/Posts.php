@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\AccountsModel;
 use App\Models\PostsModel;
 use App\Models\CommentsModel;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Posts extends BaseController
@@ -60,10 +61,46 @@ class Posts extends BaseController
 
     public function view_post($post_id) {
         $post = model(PostsModel::class)->getPosts($post_id);
+        $time = new Time($post['updated_at']);
+        $time = $time->difference(Time::now());
+        if (($diff = $time->getSeconds()) < 60) {
+            $post['updated_at'] = ($diff == 1) ? "{$diff} second ago" : "{$diff} seconds ago";
+        } else if (($diff = $time->getMinutes()) < 60) {
+            $post['updated_at'] = ($diff == 1) ? "{$diff} minute ago" : "{$diff} minutes ago";
+        } elseif (($diff = $time->getHours()) < 24) {
+            $post['updated_at'] = ($diff == 1) ? "{$diff} hour ago" : "{$diff} hours ago";
+        } else if ($time->getMonths() == 0) {
+            $diff = $time->getDays();
+            $post['updated_at'] = ($diff == 1) ? "{$diff} day ago" : "{$diff} days ago";
+        } else if (($diff = $time->getMonths()) < 12) {
+            $post['updated_at'] = ($diff == 1) ? "{$diff} month ago" : "{$diff} months ago";
+        } else {
+            $post['updated_at'] = (($diff = $time->getYears()) == 1) ? "{$diff} year ago" : "{$diff} years ago";
+        }
+
         $comments = model(CommentsModel::class)->getComments($post['id']);
         $accounts_model = model(AccountsModel::class);
-        foreach ($comments as &$comment) { // Inserts a username key into the every sub-array in $comments
+        foreach ($comments as &$comment) {
+            // Inserts a username key into the every sub-array in $comments
             $comment['username'] = $accounts_model->getAccountById($comment['account_id'])['username'];
+
+            // Formats the updated_at key into a duration instead of a timestamp
+            $time = new Time($comment['updated_at']);
+            $time = $time->difference(Time::now());
+            if (($diff = $time->getSeconds()) < 60) {
+                $comment['updated_at'] = ($diff == 1) ? "{$diff} second ago" : "{$diff} seconds ago";
+            } else if (($diff = $time->getMinutes()) < 60) {
+                $comment['updated_at'] = ($diff == 1) ? "{$diff} minute ago" : "{$diff} minutes ago";
+            } elseif (($diff = $time->getHours()) < 24) {
+                $comment['updated_at'] = ($diff == 1) ? "{$diff} hour ago" : "{$diff} hours ago";
+            } else if ($time->getMonths() == 0) {
+                $diff = $time->getDays();
+                $comment['updated_at'] = ($diff == 1) ? "{$diff} day ago" : "{$diff} days ago";
+            } else if (($diff = $time->getMonths()) < 12) {
+                $comment['updated_at'] = ($diff == 1) ? "{$diff} month ago" : "{$diff} months ago";
+            } else {
+                $comment['updated_at'] = (($diff = $time->getYears()) == 1) ? "{$diff} year ago" : "{$diff} years ago";
+            }
         }
 
         if (empty($post)) {
