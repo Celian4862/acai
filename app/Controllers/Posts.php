@@ -211,15 +211,16 @@ class Posts extends BaseController
 
         $new_post_id = $posts_model->insertID(); // To keep constant
 
-        foreach ($files['images'] as $file) {
-            $newName = $file->getRandomName();
-            $images_model->save([
-                'post_id' => $new_post_id,
-                'image' => $newName,
-            ]);
-            $file->move(ROOTPATH . 'public/images/user_imgs', $newName);
+        if ($files) {
+            foreach ($files['images'] as $file) {
+                $newName = $file->getRandomName();
+                $images_model->save([
+                    'post_id' => $new_post_id,
+                    'image' => $newName,
+                ]);
+                $file->move(ROOTPATH . 'public/images/user_imgs', $newName);
+            }
         }
-
         return redirect()->to("/forum/posts/{$new_post_id}");
     }
 
@@ -320,6 +321,6 @@ class Posts extends BaseController
 
         $posts_model->delete($post_id);
 
-        return redirect()->to('/dashboard');
+        return redirect()->to((session()->get('_ci_previous_url') === site_url('/dashboard')) ? '/dashboard' : '/forum');
     }
 }
