@@ -32,7 +32,7 @@ class AddAccounts extends Migration
             ],
             'reset_token' => [
                 'type' => 'VARCHAR',
-                'constraint' => 50,
+                'constraint' => 100,
                 'null' => true,
             ],
             'token_expiry' => [
