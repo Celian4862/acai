@@ -193,6 +193,16 @@ class Posts extends BaseController
                         ]);
                         return redirect()->back()->withInput();
                     }
+                } else {
+                    $this->validateData([], [
+                        'default' => [
+                            'rules' => 'required',
+                            'errors' => [
+                                'required' => 'No file selected.',
+                            ]
+                        ]
+                    ]);
+                    return redirect()->back()->withInput();
                 }
             }
         }
