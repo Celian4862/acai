@@ -99,7 +99,19 @@ p {
 }
 
 .login-bg {
-    background-image: url('https://i1.adis.ws/i/canon/get-inspired-composition-tips-urban-cityscapes-3_08b0f41598744af6bbc287a6cf6a30ff?$media-collection-half-dt$');
+    background-image: url('images/grace-simoneau.jpg');
+    background-size: cover;
+    background-position: fixed;
+    background-repeat: no-repeat;
+}
+
+.field-bubble {
+    background-color: white;
+    width: 50%;
+}
+
+.signup-bg {
+    background-image: url('images/sean-foster.jpg');
     background-size: cover;
     background-position: fixed;
     background-repeat: no-repeat;
