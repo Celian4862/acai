@@ -18,7 +18,7 @@ p {
 }
 
 .background-half {
-    background-image: url('/images/buildings-rising.jpg');
+    background-image: url('/images/escalating.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -101,19 +101,18 @@ p {
 .login-bg {
     background-image: url('images/grace-simoneau.jpg');
     background-size: cover;
-    background-position: fixed;
+    background-attachment: fixed;
     background-repeat: no-repeat;
 }
 
 .field-bubble {
     background-color: white;
-    width: 50%;
 }
 
 .signup-bg {
     background-image: url('images/sean-foster.jpg');
     background-size: cover;
-    background-position: fixed;
+    background-attachment: fixed;
     background-repeat: no-repeat;
 }
 

@@ -1,9 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
     const element = document.querySelector('nav');
     const elementHeight = element.offsetHeight;
+
+    const elem = document.querySelector('footer');
+    const elemHeight = elem.offsetHeight;
+
     const newHeight = `calc(100vh - ${elementHeight}px)`;
+    const newHeight2 = `calc(100vh - ${elementHeight}px - ${elemHeight}px)`;
+
+    const signupBg = document.querySelector('.signup-bg');
+    const loginBg = document.querySelector('.login-bg');
     const backgroundHalf = document.querySelector('.background-half');
-    backgroundHalf.style.height = newHeight;
+
+    if (signupBg) {
+        signupBg.style.height = newHeight2;
+    }
+    if (loginBg) {
+        loginBg.style.height = newHeight2;
+    }
+    if (backgroundHalf) {
+        backgroundHalf.style.height = newHeight;
+    }
 });
 
 let pageNum = 0;
