@@ -67,8 +67,10 @@ php_errors.log
 
 !public/images/user_imgs
 public/images/user_imgs/*
+!public/images/user_imgs/.gitkeep
 !public/images/user_imgs/to-delete
 public/images/user_imgs/to-delete/*
+!public/images/user_imgs/to-delete/.gitkeep
 
 #-------------------------
 # User Guide Temp Files
